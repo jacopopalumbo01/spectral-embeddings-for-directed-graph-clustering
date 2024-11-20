@@ -1,4 +1,4 @@
-function [W] = GenBlockCycle(num_blocks, num_nodes, conn_prob)
+function [W, nodes] = GenBlockCycle(num_blocks, num_nodes, conn_prob)
     % Calculate probability of belonging to a block
     prob = 1.0 / num_blocks;
     
