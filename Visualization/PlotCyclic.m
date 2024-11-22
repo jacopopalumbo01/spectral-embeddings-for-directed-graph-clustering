@@ -55,10 +55,10 @@ end
 G = digraph(A);
 
 figure;
-plot(G, "NodeColor", node_color);
+h = plot(G, "NodeColor", node_color);
 
-h.XData = nodes_pos(:,1) + rand(size(nodes,1),1)/10;
-h.YData = nodes_pos(:,2) + rand(size(nodes,1),1)/10;
+h.XData = nodes_pos(:,1) + rand(size(nodes,1),1);
+h.YData = nodes_pos(:,2) + rand(size(nodes,1),1);
 
 h.NodeLabel = {};
 end
