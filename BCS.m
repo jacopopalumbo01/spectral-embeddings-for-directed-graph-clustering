@@ -1,6 +1,5 @@
 function [tau] = BCS(W, P, k)
 
-  
 
     %% Step 2: Find the k cycle eigenvalues
     % Perform Arnoldi iteration
