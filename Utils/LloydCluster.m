@@ -12,7 +12,7 @@ function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
     % Get dimension
     num_points = size(X,1);
     dim = size(X, 2);
-    
+    X
     
     %% Initialize random centroids taken from X
     centroids = X(randperm(num_points, k), :);
@@ -27,7 +27,7 @@ function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
         for j = 1:num_points
             % Compute distance
             for c = 1:k
-                sub = transpose(X(iter,:)) - centroids(c);
+                sub = transpose(X(j,:)) - centroids(c);
                 distance(c) = norm(sub);
             end
 

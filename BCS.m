@@ -40,7 +40,7 @@ function [tau] = BCS(W, P, k)
     hold on;
     plot(real(eigvec_red(:,3)),imag(eigvec_red(:,3)),'g*')
     legend('eig1','eig2','eig3');
-    pause;
+
     %% Step 3: K-means on the rows
     [tau, C] = LloydCluster(eigvec_red, k, 100)
     %[tau, C] = kmeans(eigvec, k);
