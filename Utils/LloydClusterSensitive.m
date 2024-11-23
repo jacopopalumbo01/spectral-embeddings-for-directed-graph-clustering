@@ -1,8 +1,9 @@
-function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
-% LloydCluster - Lloyd’s Algorithm
+function [membership, centroids] = LloydClusterSensitive(X, k, max_iters, tol)
+% LloydClusterSensitive - Lloyd’s algorithm with frequency sensitive
+% learning
 %
 %% Syntax:
-%        LloydCluster(X, k, max_iters, tol)
+%        LloydClusterSensitive(X, k, max_iters, tol)
 %
 %% Input Arguments:
 %       *Required Input Arguments*
@@ -16,7 +17,6 @@ function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
 %       - membership:       Vector with mappings (point -> cluster)
 %       - centroids:        The centroids found by the algorithm
 %
-
     if nargin == 2
         max_iters = 100;
         tol = 1e-6;
@@ -29,6 +29,9 @@ function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
     % Get dimension
     num_points = size(X,1);
     dim = size(X, 2);
+
+    %% Initialize centroids activity vector
+    a = ones(k,1);
     
     %% Initialize random centroids taken from X
     centroids = X(randperm(num_points, k), :);
@@ -45,9 +48,13 @@ function [membership, centroids] = LloydCluster(X, k, max_iters, tol)
             for c = 1:k
                 sub = transpose(X(j,:)) - centroids(c);
                 distance(c) = norm(sub);
+                % Consider centroid activity
+                distance(c) = a(c) * distance(c);
             end
 
             [~, membership(j)] = min(distance);
+            % Update centroid activity
+            a(membership(j)) = a(membership(j)) + 1;
         end
        
 

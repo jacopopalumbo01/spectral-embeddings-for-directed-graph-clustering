@@ -42,6 +42,6 @@ function [tau] = BCS(W, P, k)
     legend('eig1','eig2','eig3');
 
     %% Step 3: K-means on the rows
-    [tau, C] = LloydCluster(eigvec_red, k, 100)
-    %[tau, C] = kmeans(eigvec, k);
+    %[tau, C] = LloydCluster(eigvec_red, k, 100);
+    [tau, C] = LloydClusterSensitive(eigvec_red, k, 100);
 end
