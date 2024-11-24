@@ -1,8 +1,8 @@
 clear all; clc;
 
 % Synthetically generate a block-cycle
-num_blocks = 3; % number of blocks
-num_nodes  = 9; % numbert of nodes
+num_blocks = 8; % number of blocks
+num_nodes  = 100; % numbert of nodes
 conn_prob  = 0.8; % connection probability between consecutive blocks
 
 [W,nodes] = GenBlockCycle(num_blocks, num_nodes, conn_prob);
@@ -22,3 +22,7 @@ scatter(real(D), imag(D), "rx");
 
 % Get clusters
 clusters = BCS(W, P, num_blocks);
+
+% Compute nmi
+NMI = nmi(nodes, clusters);
+fprintf("Labeling accuracy (NMI): %f\n", NMI);
