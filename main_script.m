@@ -23,6 +23,15 @@ scatter(real(D), imag(D), "rx");
 % Get clusters
 clusters = BCS(W, P, num_blocks);
 
+%% Evaluation
+fprintf("----------\nEvaluation\n----------\n")
 % Compute nmi
 NMI = nmi(nodes, clusters);
-fprintf("Labeling accuracy (NMI): %f\n", NMI);
+fprintf("   NMI:        %f\n", NMI);
+
+[inferred_labels,~] = label_data(clusters,nodes,1);
+
+% Compute f-score
+[Scores] = evaluate_scores(nodes,inferred_labels);
+F_score = Scores(6);
+fprintf("   F-score:    %f\n", F_score);
