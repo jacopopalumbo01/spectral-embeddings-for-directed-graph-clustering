@@ -25,6 +25,13 @@ clusters = BCS(W, P, num_blocks);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
+
+%% Internal
+% Compute RCut
+[RCut,RCCut] = computeRCutValue(clusters,W,false);
+fprintf("   RCut:       %f\n", RCut);
+
+%% External
 % Compute nmi
 NMI = nmi(nodes, clusters);
 fprintf("   NMI:        %f\n", NMI);
