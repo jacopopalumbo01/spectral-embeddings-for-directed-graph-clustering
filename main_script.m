@@ -16,10 +16,6 @@ P = TransitionMatrix(W);
 % Compute the eigenvalues of the transition matrix
 [V, D] = eig(P);
 
-% Plot the cycle eigenvalues
-figure;
-scatter(real(D), imag(D), "rx");
-
 % Get clusters
 clusters = BCS(W, P, num_blocks);
 
