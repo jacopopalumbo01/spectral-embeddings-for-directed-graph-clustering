@@ -23,7 +23,7 @@ function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec)
     xlabel('Real part');
     ylabel('Imaginary part');
     for i = 1:size(cycle_eigvec,2)
-        plot(real(cycle_eigvec(:,i)),imag(cycle_eigvec(:,i)),'r.')
+        plot(real(cycle_eigvec(:,i)),imag(cycle_eigvec(:,i)),'r.',"MarkerSize",15);
         hold on;
     end
     legend("Cycle Eigenvectors")

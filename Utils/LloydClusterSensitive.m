@@ -88,7 +88,7 @@ function [membership, centroids] = LloydClusterSensitive(X, k, max_iters, tol)
     end
 
     if iter == max_iters
-        fprintf('Lloyd''s Algorithm did not reach the required tol (%d) at iter=\n', tol, max_iters);
+        fprintf('Lloyd''s Algorithm did not reach the required tol (%d) at iter=%d\n', tol, max_iters);
     end
 
 end

@@ -36,5 +36,5 @@ fprintf("   NMI:        %f\n", NMI);
 
 % Compute f-score
 [Scores] = evaluate_scores(nodes,inferred_labels);
-F_score = Scores(6);
+F_score = Scores(3);
 fprintf("   F-score:    %f\n", F_score);

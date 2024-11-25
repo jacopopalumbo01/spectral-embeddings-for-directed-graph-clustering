@@ -1,7 +1,6 @@
 function [tau] = BCS(W, P, k)
 
-
-    %% Step 2: Find the k cycle eigenvalues
+    %% Find the k cycle eigenvalues
     % Perform Arnoldi iteration
     %[Q, H] = Arnoldi(P, 10);
       
@@ -36,5 +35,5 @@ function [tau] = BCS(W, P, k)
 
     %% Step 3: K-means on the rows
     %[tau, C] = LloydCluster(eigvec_red, k, 100);
-    [tau, C] = LloydClusterSensitive(eigvec_red, k, 100);
+    [tau, C] = LloydClusterSensitive(eigvec_red, k, 500);
 end
