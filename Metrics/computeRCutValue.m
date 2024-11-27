@@ -1,43 +1,37 @@
-function [Cut,CCut] = computeRCutValue(clusters,W,normalized)
-% Computes the components in the Ratio/Normalized Cut and Ratio/Normalized Cheeger Cut expression.
+function RCut = computeRCutValue(clusters,W)
+% computeRCutValue - This function computes the Ratio Cut value 
 %
-% Usage: [cutpart1,cutpart2] = computeCutValue(clusters,W,normalized)
+%% Syntax:
+%        computeRCutValue(clusters, W)
 %
-% ------------------------------------------
-%   Author: Dimosthenis Pasadakis
-%   Source: https://github.com/DmsPas/Multiway-p-spectral-clustering
+%% Input Arguments:
+%       *Required Input Arguments*
+%       - clusters:         The labels of the clusters associated with each
+%                           node
+%       - W:                The graph adjacency matrix
 %
+%% Output Arguments:
+%       - RCut:             The value of Ratio Cut
+%    
 
+% Number of clusters
 K = max(clusters);
 
-% Initialized Cut and Cheeger Cut
-Cut  = 0;
-CCut = 0;
+% Initialized RCut value
+RCut = 0;
 
 for k = 1:K
-    
     W2  = W(clusters==k,clusters~=k);
-    cut = full(sum(sum(W2)));
     
-    
-    if (~normalized)
-        cardinalityA = sum(clusters==k);
-        cardinalityB = sum(clusters~=k);
-        
-        cutpart = cut/cardinalityA;
-        cutpart_min = cut/min(cardinalityA,cardinalityB);
+    % Get number of nodes for the current partition
+    num_nodes = size(W2, 1);
+
+    if num_nodes == 0
+        RCut = RCut + 0.0;
     else
-        degreeA = sum(W(:,clusters==k));
-        degreeB = sum(W(:,clusters~=k));
-        
-        volA   = sum(degreeA);
-        volB   = sum(degreeB);
-        
-        cutpart = cut/volA;
-        cutpart_min = cut/min(volA,volB);       
+        RCut = RCut + (full(sum(sum(W2))) / num_nodes);
     end
-    Cut  = Cut  + cutpart; 
-    CCut = CCut + cutpart_min;  
+    
 end
 
 end

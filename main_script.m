@@ -24,7 +24,7 @@ fprintf("----------\nEvaluation\n----------\n")
 
 %% Internal
 % Compute RCut
-[RCut,RCCut] = computeRCutValue(clusters,W,false);
+RCut = computeRCutValue(clusters,W);
 fprintf("   RCut:       %f\n", RCut);
 
 %% External
