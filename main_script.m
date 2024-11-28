@@ -13,9 +13,6 @@ PlotCyclic(W, num_blocks, nodes);
 % Compute the transition matrix
 P = TransitionMatrix(W);
 
-% Compute the eigenvalues of the transition matrix
-[V, D] = eig(P);
-
 % Get clusters
 clusters = BCS(W, P, num_blocks);
 
