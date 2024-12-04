@@ -1,4 +1,13 @@
-function [tau] = BCS(W, P, k, plot)
+function [eigval_red,eigvec_red] = BCS(W, P, k, plot)
+% Perform cyclic spectral clustering
+% Input
+% W: Adjacency matrix
+% P: Transition matrix
+% k: Number of clusters
+% plot: Plot the eigenvalues (0/1)
+% Output
+% [eigenvalues, eigenvectors]
+
 
 if nargin < 4
     plot = true;
@@ -35,11 +44,9 @@ fprintf('Eigvec matrix with rows: %d and cols: %d\n',...
     size(eigvec_red,1),size(eigvec_red,2));
 
 if plot
-    % Plot eigenvalues
+    % Plot eigenvalues and eigenvectors 
     PlotCyclicEig(D,eigval_red,eigvec_red);
 end
 
-%% Step 3: K-means on the rows
-%[tau, C] = LloydCluster(eigvec_red, k, 100);
-[tau, C] = LloydClusterSensitive(eigvec_red, k, 500);
+
 end
