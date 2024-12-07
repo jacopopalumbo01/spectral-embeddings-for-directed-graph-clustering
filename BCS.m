@@ -1,16 +1,22 @@
-function [eigval_red,eigvec_red] = BCS(W, P, k, plot)
+function [eigval_red,eigvec_red] = BCS(W, P, k, plot, pedantic)
 % Perform cyclic spectral clustering
 % Input
 % W: Adjacency matrix
 % P: Transition matrix
 % k: Number of clusters
-% plot: Plot the eigenvalues (0/1)
+% plot: Plot the eigenvalues (true/false)
+% pedantic: Pedantic output (true/false)
 % Output
 % [eigenvalues, eigenvectors]
 
 
 if nargin < 4
     plot = true;
+    pedantic = true;
+end
+
+if nargin < 5
+    pedantic = true;
 end
 
 %% Find the k cycle eigenvalues
@@ -40,8 +46,11 @@ for i = 1:k
     D(j) = [];
     modulus(j) = [];
 end
-fprintf('Eigvec matrix with rows: %d and cols: %d\n',...
-    size(eigvec_red,1),size(eigvec_red,2));
+
+if pedantic
+    fprintf('Eigvec matrix with rows: %d and cols: %d\n',...
+        size(eigvec_red,1),size(eigvec_red,2));
+end
 
 if plot
     % Plot eigenvalues and eigenvectors 

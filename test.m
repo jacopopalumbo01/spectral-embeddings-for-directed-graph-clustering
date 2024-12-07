@@ -1,50 +1,61 @@
 clear all; clc;
 
-num_blocks = 4;
-num_nodes  = [10;20;50;100;200;500;1000];
+addpaths_SC;
+
+fprintf("Testing synthetic block-cyclic graph without perturbation\n");
+num_blocks = [3;5;8;10];
+num_nodes  = [100;200;500;1000;2500;5000];
 conn_prob  = 0.8;
 
 num_tests = size(num_nodes,1);
 
-% Initialize metrics vectors
-R_cut   = zeros(num_tests, 1);
-NMI     = zeros(num_tests, 1);
-F_score = zeros(num_tests, 1);
-
-for i = 1:num_tests
-    % Generate new graph
-    [W,nodes] = GenBlockCycle(num_blocks, num_nodes(i,1), conn_prob);
-
-    % Compute the transition matrix
-    P = TransitionMatrix(W);
-
-    % Get clusters
-    clusters = BCS(W, P, num_blocks, false);
+for i = 1:size(num_blocks,1)
+    % Initialize metrics vectors
+    NCut   = zeros(num_tests, 1);
+    RCut   = zeros(num_tests, 1);
+    NMI     = zeros(num_tests, 1);
+    F_score = zeros(num_tests, 1);
     
-    % Compute and save metrics
-    R_cut(i, 1) = computeRCutValue(clusters,W);
-    NMI(i, 1)   = nmi(nodes, clusters);
-
-    [inferred_labels,~] = label_data(clusters,nodes,1);
-    [Scores] = evaluate_scores(nodes,inferred_labels);
+    fprintf("")
+    for j = 1:num_tests
+        % Generate new graph
+        [W,nodes] = GenBlockCycle(num_blocks(i,1), num_nodes(j,1), conn_prob);
     
-    F_score(i, 1) = Scores(3);
+        % Compute the transition matrix
+        P = TransitionMatrix(W);
+    
+        % Get cycle eigenvalues
+        [cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks(i,1), ...
+            false, false);
+        
+        % Extract the real and imaginary part 
+        % from the cycle eigenvectors
+        cycle_real = real(cycle_eigvecs);
+        cycle_imag = imag(cycle_eigvecs);
+        % The new data matrix is [num_nodes, 2xecycle_eigenvecs]
+        data_real_imag = [cycle_real, cycle_imag];
+
+        % K-means on the rows
+        [cluster_index, centroids] = kmeans(data_real_imag, num_blocks(i,1), 'Distance', 'sqeuclidean');
+
+        % Compute and save metrics
+        normalized = 1;
+        NCut(j,1) = computeRCutValue(cluster_index,W,normalized);
+        
+        RCut(j,1) = computeRCutValue(cluster_index,W,~normalized);
+        
+        NMI(j, 1)   = nmi(nodes, cluster_index);
+    
+        [inferred_labels,~] = label_data(cluster_index,nodes,1);
+        [Scores] = evaluate_scores(nodes,inferred_labels);
+        F_score(j, 1) = Scores(3);
+    end
+    % Print results
+    fprintf("---------------------\n");
+    fprintf("   %d blocks\n", num_blocks(i,1));
+    fprintf("---------------------\n");
+    % Generate table with computed metrics
+    T = table(num_nodes, NCut, RCut, NMI, F_score); 
+    % Display the table
+    disp(T);
 end
-
-figure;
-semilogx(num_nodes,R_cut, "r-x");
-xlabel("Number of nodes");
-ylabel("Ratio Cut");
-title("Ratio Cut")
-
-figure;
-semilogx(num_nodes,NMI, "r-x");
-xlabel("Number of nodes");
-ylabel("NMI");
-title("NMI");
-
-figure;
-semilogx(num_nodes,NMI, "r-x");
-xlabel("Number of nodes");
-ylabel("F-Score");
-title("F-score")
