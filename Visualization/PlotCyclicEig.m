@@ -1,4 +1,4 @@
-function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec)
+function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec, graph_name)
     % PlotCyclic - Plots block-cyclic eigenvalues and eigenvectors
     %
     %% Syntax:
@@ -9,7 +9,17 @@ function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec)
     %       - eigval:           Other eigenvalues
     %       - cycle_eigval:     Cycle eigenvalues
     %       - cycle_eigvec:     Cycle eigenvectors
+    %       - graph_name:       Graph name
     %
+    
+    if nargin < 4
+        eigval_title = "Eigenvalues of Transition Matrix";
+        eigvec_title = "Cycle eigenvectors";
+    else
+        eigval_title = strcat("Eigenvalues of Transition Matrix - ", graph_name);
+        eigvec_title = strcat("Cycle eigenvectors - ", graph_name);
+    end
+
     figure;
     scatter(real(cycle_eigval), imag(cycle_eigval), "ro");
     hold on;
@@ -17,7 +27,7 @@ function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec)
     legend('Cycle Eigenvalues', 'Other Eigenvalues');
     xlabel('Real part');
     ylabel('Imaginary part');
-    title("Eigenvalues of Transition Matrix");
+    title(eigval_title);
 
     % Plot cycle eigenvectors
     figure;
@@ -28,5 +38,5 @@ function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec)
     legend("Cycle Eigenvectors")
     xlabel('Real part');
     ylabel('Imaginary part');
-    title("Cycle eigenvectors");
+    title(eigvec_title);
 end

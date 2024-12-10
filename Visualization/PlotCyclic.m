@@ -1,4 +1,4 @@
-function PlotCyclic(A, num_blocks, nodes)
+function PlotCyclic(A, num_blocks, nodes, graph_name)
 % PlotCyclic - Plots a Block-Cyclic Graph
 %
 %% Syntax:
@@ -9,7 +9,12 @@ function PlotCyclic(A, num_blocks, nodes)
 %       - A:                Adjacency Matrix 
 %       - num_blocks:       Number of blocks
 %       - nodes:            Nodes labels
-%
+%       - graph_name:       Graph name used during visualization
+
+% Set default graph name
+if nargin < 4
+    graph_name = "";
+end
 
 num_nodes = size(nodes,1);
 
@@ -56,9 +61,11 @@ G = digraph(A);
 
 figure;
 h = plot(G, "NodeColor", node_color);
-
+hold on;
 h.XData = nodes_pos(:,1) + rand(size(nodes,1),1);
 h.YData = nodes_pos(:,2) + rand(size(nodes,1),1);
+
+title(graph_name);
 
 h.NodeLabel = {};
 end
