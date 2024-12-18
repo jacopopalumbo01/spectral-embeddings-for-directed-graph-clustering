@@ -61,12 +61,13 @@ end
         for j = 1:num_nodes
             if nodes(j) == next_block && rand(1) <= conn_prob
                 W(i,j) = 1;
-            end
+            else
 
-            % Add perturbation
-            if perturbed
-                if rand(1) <= pert_prob
-                    W(i,j) = 1;
+                % Add perturbation
+                if perturbed
+                    if rand(1) <= pert_prob
+                        W(i,j) = 1;
+                    end
                 end
             end
         end
