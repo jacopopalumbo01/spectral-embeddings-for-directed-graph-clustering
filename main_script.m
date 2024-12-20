@@ -66,6 +66,7 @@ P = TransitionMatrix(W);
 % Plot sparsity pattern of W
 figure;
 spy(W);
+title("Perturbed Block Cycle Graph Adjacency Matrix");
 
 % Get clusters
 [cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks, true, true, graph_name);
