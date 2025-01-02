@@ -2,7 +2,9 @@ clear all; clc;
 
 addpaths_SC;
 
-fprintf("Testing synthetic block-cyclic graph without perturbation\n");
+% This test is uniform because the membership probability is 1/num_blocks
+% for each block (discrete uniform distribution).
+fprintf("Testing synthetic uniform block-cyclic graph without perturbation\n");
 num_blocks = [3;5;8;10];
 num_nodes  = [100;200;500;1000;2500;5000];
 conn_prob  = 0.8;
@@ -18,8 +20,10 @@ for i = 1:size(num_blocks,1)
     
     fprintf("")
     for j = 1:num_tests
+        % Compute uniform membership probability
+        block_weights = ones(num_blocks(i,1), 1) .* (1/num_blocks(i,1)); 
         % Generate new graph
-        [W,nodes] = GenBlockCycle(num_blocks(i,1), num_nodes(j,1), conn_prob);
+        [W,nodes] = GenBlockCycle(num_blocks(i,1), num_nodes(j,1), conn_prob, block_weights);
     
         % Compute the transition matrix
         P = TransitionMatrix(W);
