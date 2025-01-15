@@ -15,28 +15,9 @@ block_weights = ones(num_blocks, 1) .* (1/num_blocks); % membership probability
 % Plot the graph
 PlotCyclic(W, num_blocks, nodes, graph_name)
 
-% Compute the transition probability matrix
-P = TransitionMatrix(W);
-
-% Plot sparsity pattern of W
-figure;
-spy(W,'k.',15)
-axis off
-title("Unperturbed Uniform Block Cycle Graph Adjacency Matrix");
-
 % Get clusters
-[cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks, true, true, graph_name);
+[cluster_index, ~] = BCS(W, num_blocks, true, true, graph_name);
 
-% Extract the real and imaginary part 
-% from the cycle eigenvectors
-cycle_real = real(cycle_eigvecs);
-cycle_imag = imag(cycle_eigvecs);
-% The new data matrix is [num_nodes, 2xecycle_eigenvecs]
-data_real_imag = [cycle_real, cycle_imag];
-
-%% Step 3: K-means on the rows
-% [tau, C] = LloydClusterSensitive(cycle_eigvecs, k, 500);
-[cluster_index, centroids] = kmeans(data_real_imag, num_blocks, 'Distance', 'sqeuclidean');
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
@@ -64,28 +45,8 @@ block_weights = transpose([0.18 0.2 0.05 0.2 0.14 0.04 0.07 0.12]); % membership
 % Plot the graph
 PlotCyclic(W, num_blocks, nodes, graph_name)
 
-% Compute the transition probability matrix
-P = TransitionMatrix(W);
-
-% Plot sparsity pattern of W
-figure;
-spy(W,'k.',15)
-axis off
-title("Unperturbed not Uniform Block Cycle Graph Adjacency Matrix");
-
 % Get clusters
-[cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks, true, true, graph_name);
-
-% Extract the real and imaginary part 
-% from the cycle eigenvectors
-cycle_real = real(cycle_eigvecs);
-cycle_imag = imag(cycle_eigvecs);
-% The new data matrix is [num_nodes, 2xecycle_eigenvecs]
-data_real_imag = [cycle_real, cycle_imag];
-
-%% Step 3: K-means on the rows
-% [tau, C] = LloydClusterSensitive(cycle_eigvecs, k, 500);
-[cluster_index, centroids] = kmeans(data_real_imag, num_blocks, 'Distance', 'sqeuclidean');
+[cluster_index, ~] = BCS(W, num_blocks, true, true, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
@@ -114,28 +75,8 @@ pert_prob  = 0.2; % perturbation probability
 % Plot the graph
 PlotCyclic(W, num_blocks, nodes, graph_name);
 
-% Compute the transition probability matrix
-P = TransitionMatrix(W);
-
-% Plot sparsity pattern of W
-figure;
-spy(W,'k.',15)
-axis off
-title("Perturbed Uniform Block Cycle Graph Adjacency Matrix");
-
 % Get clusters
-[cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks, true, true, graph_name);
-
-% Extract the real and imaginary part 
-% from the cycle eigenvectors
-cycle_real = real(cycle_eigvecs);
-cycle_imag = imag(cycle_eigvecs);
-% The new data matrix is [num_nodes, 2xecycle_eigenvecs]
-data_real_imag = [cycle_real, cycle_imag];
-
-%% Step 3: K-means on the rows
-% [tau, C] = LloydClusterSensitive(cycle_eigvecs, k, 500);
-[cluster_index, centroids] = kmeans(data_real_imag, num_blocks, 'Distance', 'sqeuclidean');
+[cluster_index, ~] = BCS(W, num_blocks, true, true, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
@@ -164,28 +105,8 @@ pert_prob  = 0.2; % perturbation probability
 % Plot the graph
 PlotCyclic(W, num_blocks, nodes, graph_name);
 
-% Compute the transition probability matrix
-P = TransitionMatrix(W);
-
-% Plot sparsity pattern of W
-figure;
-spy(W,'k.',15)
-axis off
-title("Perturbed not Uniform Block Cycle Graph Adjacency Matrix");
-
 % Get clusters
-[cycle_eigvals, cycle_eigvecs] = BCS(W, P, num_blocks, true, true, graph_name);
-
-% Extract the real and imaginary part 
-% from the cycle eigenvectors
-cycle_real = real(cycle_eigvecs);
-cycle_imag = imag(cycle_eigvecs);
-% The new data matrix is [num_nodes, 2xecycle_eigenvecs]
-data_real_imag = [cycle_real, cycle_imag];
-
-%% Step 3: K-means on the rows
-% [tau, C] = LloydClusterSensitive(cycle_eigvecs, k, 500);
-[cluster_index, centroids] = kmeans(data_real_imag, num_blocks, 'Distance', 'sqeuclidean');
+[cluster_index, ~] = BCS(W, num_blocks, true, true, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
