@@ -49,7 +49,7 @@ nodes = randsample(num_blocks, num_nodes, true, block_weights);
 
 % Order the nodes (i.e. all the first block at the start, followed by
 % the second block and so on)
-nodes = sort(nodes);
+%nodes = sort(nodes);
 
 % Initialize the adjacency matrix
 W = zeros(num_nodes, num_nodes);
