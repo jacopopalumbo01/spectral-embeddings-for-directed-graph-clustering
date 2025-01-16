@@ -46,6 +46,7 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     modulus = abs(D);
     
     % Select k largest eigenvalues and corresponding eigenvectors
+    % Note: We are interested in the eigenvalues with largest modulus
     [~, indices] = maxk(modulus, k);
     cycle_eigvals = D(indices);
     cycle_eigvecs = V(:, indices);
@@ -63,7 +64,8 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     data_real_imag = [real(cycle_eigvecs), imag(cycle_eigvecs)];
     
     % Perform k-means clustering
-    [cluster_indexs, centroids] = kmeans(data_real_imag, k, 'Distance', 'sqeuclidean');
+    disp('Here in kmeans');
+    [cluster_indexs, centroids] = kmeans(data_real_imag, k, 'Distance', 'sqeuclidean','Replicates', 20);
     
     if verbose
         fprintf('Clustering completed. %d clusters identified.\n', k);

@@ -16,6 +16,6 @@ V_k = V(:, 1:k); % Right singular vectors
 embeddings = U_k; % Use left singular vectors as node embeddings for clustering  
 
 % Apply k-means clustering to the embeddings
-[cluster_indexs, centroids] = kmeans(embeddings, k);
+[cluster_indexs, centroids] = kmeans(embeddings, k,'Replicates', 20);
 
 end
