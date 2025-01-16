@@ -13,7 +13,7 @@ V_k = V(:, 1:k); % Right singular vectors
 
 % Step 3: Perform Clustering
 % Combine embeddings for clustering (either U_k or V_k can be used depending on the task)
-embeddings = U_k; % Use left singular vectors as node embeddings
+embeddings = U_k; % Use left singular vectors as node embeddings for clustering  
 
 % Apply k-means clustering to the embeddings
 [cluster_indexs, centroids] = kmeans(embeddings, k);
