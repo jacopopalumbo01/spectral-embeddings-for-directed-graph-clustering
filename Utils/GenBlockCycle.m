@@ -1,12 +1,12 @@
 function [W, nodes] = GenBlockCycle(num_blocks, num_nodes, conn_prob, block_weights, perturbed, pert_prob)
-% GenBlockCycle - Generates a Block Cycle graph
+% GenBlockCycle - Generates a Block Cyclic graph
 %% Syntax:
 %        GenBlockCycle(num_blocks, num_nodes, conn_prob)
 %
 %% Input Arguments:
 %       *Required Input Arguments*
-%       - num_blocks:       Number of blocks of the Block Cycle graph 
-%       - num_nodes:        Number of nodes of the Block Cycle graph
+%       - num_blocks:       Number of blocks of the Block Cyclic graph 
+%       - num_nodes:        Number of nodes of the Block Cyclic graph
 %       - conn_prob:        Connection probability between two consecutive
 %                           blocks
 %       - block_weights:    Vector containing weight for each block

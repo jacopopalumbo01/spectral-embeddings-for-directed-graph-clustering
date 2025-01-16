@@ -23,7 +23,7 @@ NMI     = zeros(num_tests, 2);
 FScore = zeros(num_tests, 2);
 
 % Generate the unperturbed Block-Cycle graph
-[W, labels] = GenBlockCycle(num_blocks, num_nodes, conn_prob, block_weights);
+[W, labels] = GenBlockCycle_dms(num_blocks, num_nodes, conn_prob, block_weights);
 
 for i = 1:size(pert_prob,1)
     % Generate Block-Cyclic Graph
@@ -69,15 +69,12 @@ color={C(1,:),C(2,:),C(3,:),C(4,:)};
 %% NCut
 figure
 
-
 plot(pert_prob, NCut(:,1), style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
 plot(pert_prob, NCut(:,2), style{2},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
 %loglog(Lambda,nnz_c, style{3},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
 
 ax = gca;
 ax.YAxis(1).Color = 'k';
-
-
 
 legend({...
     'BCS', 'SVD'...
@@ -88,7 +85,6 @@ xlabel('Perturbation Probability $\gamma$','interpreter','latex');
 
 
 ylabel('Normalized Cut','interpreter','latex');
-
 
 xlim([min(pert_prob),max(pert_prob)]);
 
@@ -133,4 +129,3 @@ tightfig;
 
 set(gcf,'units','points','position',[10 10 300 200]*1.9);
 saveas(gcf,'FScore_perturbation','pdf');
-
