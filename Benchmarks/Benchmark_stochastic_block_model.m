@@ -6,26 +6,27 @@ fprintf("BENCHMARK FOR BCS ON STOCHASTIC BLOCKMODELS\n\n");
 fprintf("-------------------------------------------\n");
 
 %% Parameters
-n   = 1000;          % Number of nodes
+n   = 100;          % Number of nodes
 k   = 8;            % Number of blocks  
 P1   = zeros(k,k);  % Block connection probability
 
 % Block membership distribution
 rho = [0.18; 0.2; 0.05; 0.2; 0.14; 0.04; 0.07; 0.13];
-
+%rho = ones(k,1);
+%rho = rho / sum(rho);
 % Set block connection probability
 conn_prob = 0.7;
 for i = 1:k
     for j = 1:k
         if i + 1 == j || (i == k && j == 1)
-            P(i,j) = conn_prob;
+            P1(i,j) = conn_prob;
         end
     end
 end
 
 %% Generation of unperturbed graph
 fprintf("Generating unperturbed graph\n")
-[A1, tau1] = StochasticBlockmodel(n,k,rho,P);
+[A1, tau1] = StochasticBlockmodel(n,k,rho,P1);
 
 
 %% Testing phase
@@ -75,6 +76,7 @@ for i = 1:num_tests
     fprintf("       Computing and saving metrics\n");
     [RCut(i,2), NCut(i,2), NMI(i,2), FScore(i,2)] = ComputeMetrics( ...
         tau1,cluster_index,A);
+
 end
 
 
@@ -114,7 +116,7 @@ ylabel('Normalized Cut','interpreter','latex');
 
 xlim([min(epsilons),max(epsilons)]);
 
-set(gca,'fontsize',14);
+set(gca,'fontsize',50);
 set(gca,'YMinorTick','on')
 set(gca,'XMinorTick','on','XTick',epsilons);
 
@@ -147,7 +149,7 @@ ylabel('F-Score','interpreter','latex');
 
 xlim([min(epsilons),max(epsilons)]);
 
-set(gca,'fontsize',14);
+set(gca,'fontsize',50);
 set(gca,'YMinorTick','on')
 set(gca,'XMinorTick','on','XTick',epsilons);
 

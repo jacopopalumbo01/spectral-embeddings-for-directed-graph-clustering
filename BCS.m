@@ -28,11 +28,12 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     end
     
     % Compute transition probability matrix
-    P = TransitionMatrix_dms(W);
+    P = TransitionMatrix(W);
     
     % Plot adjacency matrix sparsity pattern
     if plotFlag
         figure;
+        axis on;
         spy(W, 'k.', 15);
         axis off;
         if ~isempty(graph_name)
@@ -41,15 +42,8 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     end
     
     % Compute eigenvalues and eigenvectors
-    [V, D] = eig(P);
+    [V, D] = eigs(P, k, 'lm');
     D = diag(D); % Extract eigenvalues
-    modulus = abs(D);
-    
-    % Select k largest eigenvalues and corresponding eigenvectors
-    % Note: We are interested in the eigenvalues with largest modulus
-    [~, indices] = maxk(modulus, k);
-    cycle_eigvals = D(indices);
-    cycle_eigvecs = V(:, indices);
     
     if verbose
         fprintf('Selected %d largest eigenvalues and their eigenvectors.\n', k);
@@ -57,11 +51,11 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     
     % Plot eigenvalues and eigenvectors
     if plotFlag
-        PlotCyclicEig(D, cycle_eigvals, cycle_eigvecs, graph_name);
+        PlotCyclicEig(D, D, V, graph_name);
     end
     
     % Combine real and imaginary parts of eigenvectors
-    data_real_imag = [real(cycle_eigvecs), imag(cycle_eigvecs)];
+    data_real_imag = [real(V), imag(V)];
 
     norm_eigvecs = 0;
     if norm_eigvecs == 1
@@ -81,16 +75,7 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
         % Perform k-means clustering on real and imaginary parts
         [cluster_indexs, centroids] = kmeans(data_real_imag, k, 'Distance', 'sqeuclidean','Replicates', 20);
     end
-    % Extract phase angles
-    % phase_data = angle(data_real_imag); 
-    % [cluster_indexs, centroids] = kmeans(phase_data, k, 'Distance', 'sqeuclidean','Replicates', 20);
-
-    % modulus = abs(data_real_imag);
-    % phase = angle(data_real_imag);
-    % polar_data = [modulus, phase];
-    % [cluster_indexs, centroids] = kmeans(polar_data, k, 'Distance', 'sqeuclidean','Replicates', 20);
-
-
+    
     if verbose
         fprintf('Clustering completed. %d clusters identified.\n', k);
     end

@@ -19,11 +19,11 @@ end
 num_nodes = size(nodes,1);
 
 %% Generate colors for different blocks
-available_colors = [255 0 0
-                    0 255 0
-                    0 0 255
-                    255 0 255
-                    0 255 255] / 255;
+available_colors = [0 0.4470 0.7410
+                    0.8500 0.3250 0.0980
+                    0.9290 0.6940 0.1250
+                    0.4940 0.1840 0.5560
+                    0.4660 0.6740 0.1880];
 
 
 colors = zeros(num_blocks,3);
@@ -60,10 +60,12 @@ end
 G = digraph(A);
 
 figure;
-h = plot(G, "NodeColor", node_color);
+h = plot(G, "NodeColor", node_color, "MarkerSize",10, "EdgeColor","black", "LineWidth",0.5);
 hold on;
-h.XData = nodes_pos(:,1) + rand(size(nodes,1),1);
-h.YData = nodes_pos(:,2) + rand(size(nodes,1),1);
+h.XData = nodes_pos(:,1) + rand(size(nodes,1),1)*1.5;
+h.YData = nodes_pos(:,2) + rand(size(nodes,1),1)*1.5;
+
+axis off;
 
 title(graph_name);
 

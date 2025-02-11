@@ -21,22 +21,30 @@ function PlotCyclicEig(eigval, cycle_eigval, cycle_eigvec, graph_name)
     end
 
     figure;
-    scatter(real(cycle_eigval), imag(cycle_eigval), "ro");
+    scatter(real(cycle_eigval), imag(cycle_eigval), 300, [0.4660 0.6740 0.1880], "o", "LineWidth",3);
     hold on;
-    scatter(real(eigval), imag(eigval), "gx");
-    legend('Cycle Eigenvalues', 'Other Eigenvalues');
-    xlabel('Real part');
-    ylabel('Imaginary part');
+    scatter(real(eigval), imag(eigval), 300, [0.8500 0.3250 0.0980], "x", "LineWidth",3);
+    legend('Cycle Eigenvalues', 'Other Eigenvalues', 'FontSize', 35);
+    xlabel('Real part', 'FontSize',40);
+    ylabel('Imaginary part', 'FontSize', 40);
     title(eigval_title);
+
+    set(gca,'fontsize',50);
+
+    tightfig;
+
 
     % Plot cycle eigenvectors
     figure;
     for i = 1:size(cycle_eigvec, 2)
-        plot(real(cycle_eigvec(:, i)), imag(cycle_eigvec(:, i)), 'r.', "MarkerSize", 18);
+        plot(real(cycle_eigvec(:, i)), imag(cycle_eigvec(:, i)), 'r.', "MarkerSize", 50, "LineWidth", 3);
         hold on;
     end
-    legend("Cycle Eigenvectors")
-    xlabel('Real part');
-    ylabel('Imaginary part');
+    legend("Cycle Eigenvectors", "FontSize", 35)
+    xlabel('Real part', "FontSize", 40);
+    ylabel('Imaginary part', "FontSize", 40);
     title(eigvec_title);
+    set(gca,'fontsize',50);
+
+    tightfig;
 end
