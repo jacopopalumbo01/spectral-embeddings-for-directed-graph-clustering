@@ -1,8 +1,8 @@
-function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
-    % BCS - Perform cyclic spectral clustering
+function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
+    % BCS - Perform acyclic spectral clustering
     %
     % Syntax:
-    %        [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
+    %        [cluster_indexs, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     %
     % Input Arguments:
     %       - W (required):            Adjacency matrix (NxN)
@@ -12,7 +12,7 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     %       - graph_name (optional):   Name of the graph (default: '')
     %
     % Output:
-    %       - cluster_indexs:          Clustering index labels
+    %       - cluster_indeces:          Clustering index labels
     %       - centroids:               Centroids obtained during clustering
     
     % Validate inputs
@@ -28,7 +28,7 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     end
      
     % Compute transition probability matrix
-    P = TransitionMatrix(W);
+    P = AcyclicTransitionMatrix(W);
     
     % Plot adjacency matrix sparsity pattern
     if plotFlag
@@ -42,8 +42,16 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     end
     
     % Compute eigenvalues and eigenvectors
-    [V, D] = eigs(P, k, 'lm');
+    [V, D] = eigs(P);
     D = diag(D); % Extract eigenvalues
+
+    %modulus = abs(D);
+    
+    % Select k largest eigenvalues and corresponding eigenvectors
+    % Note: We are interested in the eigenvalues with largest modulus
+    %[~, indices] = maxk(modulus, k);
+    %cycle_eigvals = D(indices);
+    %cycle_eigvecs = V(:, indices);
     
     if verbose
         fprintf('Selected %d largest eigenvalues and their eigenvectors.\n', k);
@@ -51,10 +59,12 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     
     % Plot eigenvalues and eigenvectors
     if plotFlag
+        %PlotCyclicEig(D, cycle_eigvals, cycle_eigvecs, graph_name);
         PlotCyclicEig(D, D, V, graph_name);
     end
     
     % Combine real and imaginary parts of eigenvectors
+    %data_real_imag = [real(cycle_eigvecs), imag(cycle_eigvecs)];
     data_real_imag = [real(V), imag(V)];
 
     norm_eigvecs = 0;
@@ -70,10 +80,10 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
         % Step 3: Handle zero rows 
         data_normalized(zero_rows, :) = 0;
         % Perform k-means clustering on real and imaginary parts
-        [cluster_indexs, centroids] = kmeans(data_normalized, k, 'Distance', 'sqeuclidean','Replicates', 20);
+        [cluster_indeces, centroids] = kmeans(data_normalized, k, 'Distance', 'sqeuclidean','Replicates', 20);
     else
         % Perform k-means clustering on real and imaginary parts
-        [cluster_indexs, centroids] = kmeans(data_real_imag, k, 'Distance', 'sqeuclidean','Replicates', 20);
+        [cluster_indeces, centroids] = kmeans(data_real_imag, k, 'Distance', 'sqeuclidean','Replicates', 20);
     end
     
     if verbose

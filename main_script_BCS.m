@@ -47,7 +47,7 @@ fprintf("   F-score:    %f\n", FScore);
 fprintf("\n\n");
 
 
-% Synthetically generate an unperturbed uniform block-cycle
+% Synthetically generate an unperturbed not uniform block-cycle
 graph_name = "Unperturbed not Uniform Block-Cycle graph";
 fprintf("%s\n", graph_name);
 n   = 100;          % Number of nodes
