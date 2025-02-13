@@ -2,11 +2,11 @@ clear;clc;
 rng(47);
 
 fprintf("-------------------------------------------\n");
-fprintf("BENCHMARK FOR BCS ON STOCHASTIC BLOCKMODELS\n\n");
+fprintf("BENCHMARK FOR BAS ON STOCHASTIC BLOCKMODELS\n\n");
 fprintf("-------------------------------------------\n");
 
 %% Parameters
-n   = 100;          % Number of nodes
+n   = 1000;          % Number of nodes
 k   = 8;            % Number of blocks  
 P1   = zeros(k,k);  % Block connection probability
 
@@ -15,10 +15,10 @@ rho = [0.18; 0.2; 0.05; 0.2; 0.14; 0.04; 0.07; 0.13];
 %rho = ones(k,1);
 %rho = rho / sum(rho);
 % Set block connection probability
-conn_prob = 0.7;
+conn_prob = 0.5;
 for i = 1:k
     for j = 1:k
-        if i + 1 == j || (i == k && j == 1)
+        if i < j
             P1(i,j) = conn_prob;
         end
     end
@@ -61,7 +61,7 @@ for i = 1:num_tests
 
     fprintf("   Running Spectral Clustering\n");
     % Get clusters with BCS
-    [cluster_index, ~] = BCS(A, k, false, false);
+    [cluster_index, ~] = BAS(A, k, false, false);
     
     % Compute and save metrics
     fprintf("       Computing and saving metrics\n");
@@ -105,7 +105,7 @@ ax = gca;
 ax.YAxis(1).Color = 'k';
 
 legend({...
-    'BCS', 'SVD'...
+    'BAS', 'SVD'...
      },'interpreter','latex','location','northwest');
  
  
@@ -138,7 +138,7 @@ ax = gca;
 ax.YAxis(1).Color = 'k';
 
 legend({...
-    'BCS', 'SVD'...
+    'BAS', 'SVD'...
      },'interpreter','latex','location','northwest');
  
  
