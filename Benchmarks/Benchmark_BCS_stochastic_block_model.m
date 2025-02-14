@@ -60,23 +60,31 @@ for i = 1:num_tests
     A = CombineBlockmodels(A1,A2);
 
     fprintf("   Running Spectral Clustering\n");
-    % Get clusters with BCS
-    [cluster_index, ~] = BCS(A, k, false, false);
+    % BCS clustering
+    [cluster_index_bcs, ~] = BCS(A, k, false, false);
     
     % Compute and save metrics
     fprintf("       Computing and saving metrics\n");
     [RCut(i,1), NCut(i,1), NMI(i,1), FScore(i,1)] = ComputeMetrics( ...
-        tau1, cluster_index, A);
+        tau1, cluster_index_bcs, A);
     
-    fprintf("   Running SVD\n");
-    % Get clusters with RAsNMF
-    [cluster_index, ~] = SVD_clustering(A, k);
+    % SVD suss clustering
+    fprintf("   Running SVD as per D.L. Sussman\n");  
+    [cluster_index_svd_suss, ~] = SVD_clustering_suss(A, k);
 
     % Compute and save metrics
     fprintf("       Computing and saving metrics\n");
     [RCut(i,2), NCut(i,2), NMI(i,2), FScore(i,2)] = ComputeMetrics( ...
-        tau1,cluster_index,A);
+        tau1,cluster_index_svd_suss,A);
 
+    % Vanilla SVD clustering
+    fprintf("   Running vanilla SVD\n");  
+    [cluster_index_svd, ~] = SVD_clustering(A, k);
+
+    % Compute and save metrics
+    fprintf("       Computing and saving metrics\n");
+    [RCut(i,3), NCut(i,3), NMI(i,3), FScore(i,3)] = ComputeMetrics( ...
+        tau1,cluster_index_svd,A);
 end
 
 
@@ -125,7 +133,6 @@ tightfig;
 set(gcf,'units','points','position',[10 10 300 200]*1.9);
 saveas(gcf,'NCut_perturbation','pdf');
 
-pause
 %% F-Score
 
 figure

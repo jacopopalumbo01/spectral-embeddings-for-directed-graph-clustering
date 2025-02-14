@@ -1,5 +1,11 @@
 function P = AcyclicTransitionMatrix(W)
 % TransitionMatrix - Compute the transition matrix from an adjacency matrix
+% According to formula
+% P_{ij} =
+% \begin{cases}
+% \frac{1}{d_i^{\text{out}}} W_{ij} & \text{if } d_i^{\text{out}} > 0, \\
+% \frac{1}{n} & \text{otherwise}.
+% \end{cases}
 %
 % Syntax:
 %        P = TransitionMatrix(W)
@@ -22,4 +28,10 @@ row_sums = sum(W, 2);
 
 % Normalize each row to create the transition matrix
 P = W ./ row_sums;
+
+plot_transition = 0;
+if plot_transition == 1
+    figure;
+    spy(P,'k');
+end
 end

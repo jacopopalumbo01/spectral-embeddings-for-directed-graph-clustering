@@ -6,7 +6,7 @@ fprintf("BENCHMARK FOR BAS ON STOCHASTIC BLOCKMODELS\n\n");
 fprintf("-------------------------------------------\n");
 
 %% Parameters
-n   = 1000;          % Number of nodes
+n   = 1000;         % Number of nodes
 k   = 8;            % Number of blocks  
 P1   = zeros(k,k);  % Block connection probability
 
@@ -125,7 +125,6 @@ tightfig;
 set(gcf,'units','points','position',[10 10 300 200]*1.9);
 saveas(gcf,'NCut_perturbation','pdf');
 
-pause
 %% F-Score
 
 figure

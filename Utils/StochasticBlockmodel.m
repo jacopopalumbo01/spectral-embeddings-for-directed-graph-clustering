@@ -13,16 +13,17 @@ function [A, tau] = StochasticBlockmodel(n, k, rho, P)
 
 
     % Compute membership function
-    tau = randsample(k, n, true, rho);
-    tau = sort(tau);
+    tau = randsample(1:k, n, true, rho);
+    % 
+    % tau = sort(tau);
     
     % Initialize A
     A = zeros(n,n);
     
-    % Populate A
+    % Populate the adjacency matric
     for i = 1:n
         for j = 1:n
-            if rand(1) <= P(tau(i),tau(j))
+            if rand() <= P(tau(i),tau(j))
                 A(i,j) = 1;
             end
         end

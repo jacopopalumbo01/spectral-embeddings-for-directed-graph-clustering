@@ -42,8 +42,8 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     end
     
     % Compute eigenvalues and eigenvectors
-    [V, D] = eigs(P, k, 'lm');
-    D = diag(D); % Extract eigenvalues
+    [V, EigVals] = eigs(P, k, 'lm');
+    EigVals      = diag(EigVals); % Extract eigenvalues
     
     if verbose
         fprintf('Selected %d largest eigenvalues and their eigenvectors.\n', k);
@@ -51,7 +51,7 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     
     % Plot eigenvalues and eigenvectors
     if plotFlag
-        PlotCyclicEig(D, D, V, graph_name);
+        PlotCyclicEig([], EigVals, V, graph_name);
     end
     
     % Combine real and imaginary parts of eigenvectors
