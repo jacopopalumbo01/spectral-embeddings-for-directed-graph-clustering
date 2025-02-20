@@ -27,9 +27,13 @@ end
 fprintf("   Generating unperturbed graph\n")
 [W, nodes] = StochasticBlockmodel(n,k,rho,P);
 
+%% Estimate number of blocks
+fprintf("   Estimating number of blocks\n");
+k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
-PlotCyclic(W, k, nodes, graph_name)
+PlotCyclic(W, k, transpose(nodes), graph_name)
 
 % Get clusters
 [cluster_index, ~] = BAS(W, k, true, true, graph_name);
@@ -71,9 +75,13 @@ end
 fprintf("   Generating unperturbed graph\n")
 [W, nodes] = StochasticBlockmodel(n,k,rho,P);
 
+%% Estimate number of blocks
+fprintf("   Estimating number of blocks\n");
+k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
-PlotCyclic(W, k, nodes, graph_name)
+PlotCyclic(W, k, transpose(nodes), graph_name)
 
 % Get clusters
 [cluster_index, ~] = BAS(W, k, true, true, graph_name);
@@ -132,8 +140,13 @@ fprintf("   Generating perturbing graph\n");
 fprintf("   Combining unperturbed and perturbing graph\n");
 W = CombineBlockmodels(W,A);
 
+%% Estimate number of blocks
+fprintf("   Estimating number of blocks\n");
+k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
+
 % Plot the graph
-PlotCyclic(W, k, nodes, graph_name);
+PlotCyclic(W, k, transpose(nodes), graph_name);
 
 % Get clusters
 [cluster_index, ~] = BAS(W, k, true, true, graph_name);
@@ -191,8 +204,13 @@ fprintf("   Generating perturbing graph\n");
 fprintf("   Combining unperturbed and perturbing graph\n");
 W = CombineBlockmodels(W,A);
 
+%% Estimate number of blocks
+fprintf("   Estimating number of blocks\n");
+k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
+
 % Plot the graph
-PlotCyclic(W, k, nodes, graph_name);
+PlotCyclic(W, k, transpose(nodes), graph_name);
 
 % Get clusters
 [cluster_index, ~] = BAS(W, k, true, true, graph_name);
