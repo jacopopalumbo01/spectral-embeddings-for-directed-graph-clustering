@@ -30,20 +30,9 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     % Compute transition probability matrix
     P = AcyclicTransitionMatrix(W);
     
-    % Plot adjacency matrix sparsity pattern
-    if plotFlag
-        figure;
-        axis on;
-        spy(W, 'k.', 15);
-        axis off;
-        if ~isempty(graph_name)
-            title(sprintf("%s Adjacency Matrix", graph_name));
-        end
-    end
-    
     % Compute eigenvalues and eigenvectors
-    [V, EigVals] = eigs(P,k,'lm');
-    EigVals = diag(EigVals); % Extract eigenvalues
+    [V, Cyclic_Eigs] = eigs(P,k,'lm');
+    Cyclic_Eigs = diag(Cyclic_Eigs); % Extract eigenvalues
 
     %modulus = abs(D);
     
@@ -61,7 +50,8 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     % Note that if we are computing only the k largest ones,
     % the first argument should be empty []
     if plotFlag
-        PlotCyclicEig([], EigVals, V, graph_name);
+        Eigs_All = eig(P);
+        PlotCyclicEig(Eigs_All, Cyclic_Eigs, V, graph_name);
     end
     
     % Combine real and imaginary parts of eigenvectors

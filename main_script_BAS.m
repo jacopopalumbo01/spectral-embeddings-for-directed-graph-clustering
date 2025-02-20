@@ -1,7 +1,12 @@
 clear all; clc;
 
 addpaths_SC;
+warning off;
 rng(42);
+plot_graph_flag = false;
+plot_eig_flag   = false;
+verbose         = false; 
+
 % Synthetically generate an unperturbed uniform block-cyclic
 graph_name = "Unperturbed Uniform Block-Acyclic graph";
 fprintf("%s\n", graph_name);
@@ -29,14 +34,16 @@ fprintf("   Generating unperturbed graph\n")
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksAcyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
-PlotCyclic(W, k, transpose(nodes), graph_name)
+if plot_graph_flag == 1
+    PlotCyclic(W, k, transpose(nodes), graph_name)
+end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, true, true, graph_name);
+[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 
 %% Evaluation
@@ -77,14 +84,15 @@ fprintf("   Generating unperturbed graph\n")
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksAcyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
-% Plot the graph
-PlotCyclic(W, k, transpose(nodes), graph_name)
-
+% Plot the input graph
+if plot_graph_flag == 1    
+    PlotCyclic(W, k, transpose(nodes), graph_name)
+end
 % Get clusters
-[cluster_index, ~] = BAS(W, k, true, true, graph_name);
+[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
@@ -142,14 +150,16 @@ W = CombineBlockmodels(W,A);
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksAcyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
-PlotCyclic(W, k, transpose(nodes), graph_name);
+if plot_graph_flag == 1
+    PlotCyclic(W, k, transpose(nodes), graph_name);
+end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, true, true, graph_name);
+[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")
@@ -206,14 +216,16 @@ W = CombineBlockmodels(W,A);
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksAcyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksAcyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
-PlotCyclic(W, k, transpose(nodes), graph_name);
+if plot_graph_flag == 1
+    PlotCyclic(W, k, transpose(nodes), graph_name);
+end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, true, true, graph_name);
+[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 %% Evaluation
 fprintf("----------\nEvaluation\n----------\n")

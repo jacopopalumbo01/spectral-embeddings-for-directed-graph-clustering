@@ -6,7 +6,7 @@ function PlotCyclic(A, num_blocks, nodes, graph_name)
 %
 %% Input Arguments:
 %       *Required Input Arguments*
-%       - A:                Adjacency Matrix 
+%       - A:                Adjacency Matrix
 %       - num_blocks:       Number of blocks
 %       - nodes:            Nodes labels
 %       - graph_name:       Graph name used during visualization
@@ -20,16 +20,16 @@ num_nodes = size(nodes,1);
 
 %% Generate colors for different blocks
 available_colors = [0 0.4470 0.7410
-                    0.8500 0.3250 0.0980
-                    0.9290 0.6940 0.1250
-                    0.4940 0.1840 0.5560
-                    0.4660 0.6740 0.1880];
+    0.8500 0.3250 0.0980
+    0.9290 0.6940 0.1250
+    0.4940 0.1840 0.5560
+    0.4660 0.6740 0.1880];
 
 
 colors = zeros(num_blocks,3);
 for i = 1:num_blocks
     colors(i,:) = available_colors(size(available_colors,1) - ...
-                                   rem(i, size(available_colors,1)),:);
+        rem(i, size(available_colors,1)),:);
 end
 
 %% Assign colors to nodes
@@ -70,5 +70,15 @@ axis off;
 title(graph_name);
 
 h.NodeLabel = {};
+
+%% Plot adjacency matrix sparsity pattern
+figure;
+axis on;
+spy(W, 'k.', 15);
+axis off;
+if ~isempty(graph_name)
+    title(sprintf("%s Adjacency Matrix", graph_name));
+end
+
 end
 

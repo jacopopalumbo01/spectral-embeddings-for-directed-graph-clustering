@@ -1,4 +1,4 @@
-function [k] = EstimateNumBlocksCyclic(A, max_k)
+function [k] = EstimateNumBlocksCyclic(W, max_nclust)
 % EstimateNumBlocks - Compute number of clusters given the adjacency matrix.
 %
 % Input:
@@ -9,7 +9,7 @@ function [k] = EstimateNumBlocksCyclic(A, max_k)
 %   - k:            Estimated number of clusters
 
 %% Step 1: Compute the transition matrix
-P = TransitionMatrix(A);
+P = TransitionMatrix(W);
 
 %% Step 2: Compute eigenvalues and eigenvectors
 [eigvecs, D] = eig(P); 
@@ -27,7 +27,7 @@ eigvecs = eigvecs(:, sort_idx);
 
 % Keep only the first k_to_find eigenvalues/eigenvectors.
 % Here we define k_to_find as the smaller of floor(max_k/2) and the available number.
-k_to_find = min(floor(max_k/2), length(eigvals));
+k_to_find = min(floor(max_nclust/2), length(eigvals));
 % (Ensure at least 2 for a valid embedding.)
 k_to_find = max(2, k_to_find);
 
@@ -38,18 +38,23 @@ eigvecs = eigvecs(:, 1:k_to_find);
 %% Step 3: Evaluate candidate clusterings using the silhouette score
 % We test candidate cluster numbers from 2 up to max_k
 % (Note: if max_k exceeds 2*k_to_find, the embedding dimension remains constant.)
-silhouette_scores = zeros(max_k - 1, 1);
+silhouette_scores = zeros(max_nclust - 1, 1);
 
-for i = 2:max_k
+num_ortho  = 50;
+num_random = 100; 
+
+for i_clust = 2:max_nclust
     % Use the first floor(i/2) eigenvectors if available.
-    num_cols = min(floor(i/2), k_to_find);
+    num_cols = min(floor(i_clust/2), k_to_find);
     submat = eigvecs(:, 1:num_cols);
     
     % Create a real embedding by concatenating real and imaginary parts
     submat_real_imag = [real(submat), imag(submat)];
     
     % Cluster into i clusters using k-means (with multiple replicates for stability)
-    [clusters, ~] = kmeans(submat_real_imag, i, 'Distance', 'sqeuclidean', 'Replicates', 20, 'MaxIter', 10000);
+    [clusters, ~] = kmeans(submat_real_imag, i_clust, 'Distance', 'sqeuclidean', 'Replicates', 20, 'MaxIter', 10000);
+
+    % [RCut_inter,clusters]  = kmeans_orthogonal(submat_real_imag', i_clust, num_ortho, num_random,W,1);
     
     % Preallocate arrays for silhouette components
     eta = zeros(size(submat,1),1);   % average distance to other points in same cluster
@@ -92,7 +97,7 @@ for i = 2:max_k
     end
     
     % Average silhouette score for candidate i
-    silhouette_scores(i-1) = mean(s_values);
+    silhouette_scores(i_clust-1) = mean(s_values);
 end
 
 %% Step 4: Select candidate k with maximum silhouette score

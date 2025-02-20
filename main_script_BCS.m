@@ -29,7 +29,7 @@ fprintf("   Generating unperturbed graph\n")
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksCyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksCyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
@@ -76,7 +76,7 @@ fprintf("   Generating unperturbed graph\n")
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksCyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksCyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
@@ -141,7 +141,7 @@ W = CombineBlockmodels(W,A);
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksCyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksCyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
@@ -205,7 +205,7 @@ W = CombineBlockmodels(W,A);
 
 %% Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
-k_estimate = EstimateNumBlocksCyclic(W,size(W,1) / 2);
+k_estimate = EstimateNumBlocksCyclic(W,n/10);
 fprintf("   Estimated: %d blocks. Ground truth: %d blocks\n", k_estimate, k);
 
 % Plot the graph
