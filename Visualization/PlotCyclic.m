@@ -74,7 +74,7 @@ h.NodeLabel = {};
 %% Plot adjacency matrix sparsity pattern
 figure;
 axis on;
-spy(W, 'k.', 15);
+spy(A, 'k.', 15);
 axis off;
 if ~isempty(graph_name)
     title(sprintf("%s Adjacency Matrix", graph_name));

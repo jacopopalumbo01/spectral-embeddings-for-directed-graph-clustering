@@ -30,17 +30,6 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     % Compute transition probability matrix
     P = TransitionMatrix(W);
     
-    % Plot adjacency matrix sparsity pattern
-    if plotFlag
-        figure;
-        axis on;
-        spy(W, 'k.', 15);
-        axis off;
-        if ~isempty(graph_name)
-            title(sprintf("%s Adjacency Matrix", graph_name));
-        end
-    end
-    
     % Compute eigenvalues and eigenvectors
     [V, EigVals] = eigs(P, k, 'lm');
     EigVals      = diag(EigVals); % Extract eigenvalues
