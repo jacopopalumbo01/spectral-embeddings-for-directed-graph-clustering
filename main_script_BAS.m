@@ -26,7 +26,7 @@ epsilon = 0.4;            % Perturbation magnitude
 % Generate block connection probability
 P = ConnectionProbabilityMatrix("acyclic", k, conn_prob);
 
-results = zeros(4,4); % Where we store all the results
+results = zeros(4,5); % Where we store all the results
 
 %% Synthetically generate an unperturbed uniform block-cyclic
 graph_name = "Unperturbed Uniform Block-Acyclic graph";
@@ -54,8 +54,8 @@ end
 
 
 % Evaluation
-[RCut, NCut, NMI, FScore] = ComputeMetrics(nodes,cluster_index,W);
-results(1,:) = [RCut, NCut, NMI, FScore];
+[RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
+results(1,:) = [RCut, NCut, NMI, FScore, modularity];
 
 
 %% Synthetically generate an unperturbed not uniform block-cycle
@@ -79,8 +79,8 @@ end
 [cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
-[RCut, NCut, NMI, FScore] = ComputeMetrics(nodes,cluster_index,W);
-results(2,:) = [RCut, NCut, NMI, FScore];
+[RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
+results(2,:) = [RCut, NCut, NMI, FScore, modularity];
 
 
 %% Synthetically generate a perturbed block-acyclic graph
@@ -124,8 +124,8 @@ end
 [cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
-[RCut, NCut, NMI, FScore] = ComputeMetrics(nodes,cluster_index,W);
-results(3,:) = [RCut, NCut, NMI, FScore];
+[RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
+results(3,:) = [RCut, NCut, NMI, FScore, modularity];
 
 
 %% Synthetically generate a perturbed block-acyclic
@@ -169,8 +169,8 @@ end
 [cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
-[RCut, NCut, NMI, FScore] = ComputeMetrics(nodes,cluster_index,W);
-results(4,:) = [RCut, NCut, NMI, FScore];
+[RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
+results(4,:) = [RCut, NCut, NMI, FScore, modularity];
 
 %% Report the results
 fprintf("----------------------\n");
@@ -186,7 +186,7 @@ fprintf("----------------------------\n");
 fprintf("@          Results         @\n")
 fprintf("----------------------------\n\n");
 
-T = array2table(results, "VariableNames", ["RCut", "NCut", "NMI", "F-Score"], ...
+T = array2table(results, "VariableNames", ["RCut", "NCut", "NMI", "F-Score", "Modularity"], ...
     "RowNames",["Unperturbed Uniform Block-Cyclic", "Unperturbed Not Uniform Block-Cycle", ...
     "Perturbed Uniform Block-Cyclic", "Perturbed Not Uniform Block-Cycle"]);
 disp(T);

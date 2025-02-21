@@ -1,4 +1,4 @@
-function [RCut, NCut, NMI, FScore] = ComputeMetrics(true_membership, inferred_membership, W)
+function [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(true_membership, inferred_membership, W)
 % ComputeMetrics - Compute all the metrics used during evaluation
 %
 %% Syntax:
@@ -32,4 +32,6 @@ NMI = nmi(true_membership, inferred_membership);
 % Compute f-score
 [Scores] = evaluate_scores(true_membership,inferred_labels);
 FScore = Scores(3);
+
+modularity = Modularity(W, inferred_labels);
 end
