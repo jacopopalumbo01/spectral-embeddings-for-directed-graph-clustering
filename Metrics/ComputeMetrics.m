@@ -33,5 +33,5 @@ NMI = nmi(true_membership, inferred_membership);
 [Scores] = evaluate_scores(true_membership,inferred_labels);
 FScore = Scores(3);
 
-modularity = Modularity(W, inferred_labels);
+modularity = Modularity(W, inferred_membership);
 end

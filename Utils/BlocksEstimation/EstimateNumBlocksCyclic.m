@@ -1,5 +1,5 @@
 function [k] = EstimateNumBlocksCyclic(W, max_nclust)
-% EstimateNumBlocks - Compute number of clusters given the adjacency matrix.
+% EstimateNumBlocksCyclic - Compute number of clusters given the adjacency matrix.
 %
 % Input:
 %   - A:            Adjacency matrix
