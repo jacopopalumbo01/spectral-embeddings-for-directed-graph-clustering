@@ -1,5 +1,5 @@
-function [k] = EstimateNumBlocksCyclicWithEigengap(W, max_nclust)
-% EstimateNumBlocksCyclicWithEigengap - Compute number of clusters given 
+function [k] = EstimateNumBlocksAcyclicWithEigengap(W, max_nclust)
+% EstimateNumBlocksAcyclicWithEigengap - Compute number of clusters given 
 % the adjacency matrix using eigengaps criterion.
 %
 % Input:
@@ -10,7 +10,7 @@ function [k] = EstimateNumBlocksCyclicWithEigengap(W, max_nclust)
 %   - k:            Estimated number of clusters
 
 %% Step 1: Compute the transition matrix
-P = TransitionMatrix(W);
+P = AcyclicTransitionMatrix(W);
 
 %% Step 2: Compute eigenvalues and eigenvectors
 [~, D] = eig(P); 
