@@ -40,7 +40,16 @@ function [cluster_indexs, centroids] = BCS(W, k, plotFlag, verbose, graph_name)
     
     % Plot eigenvalues and eigenvectors
     if plotFlag
-        PlotCyclicEig([], EigVals, V, graph_name);
+        D = eig(P);
+        modulus = abs(D);
+            
+        % Select k largest eigenvalues and corresponding eigenvectors
+        % Note: We are interested in the eigenvalues with largest modulus
+        [~, indices] = maxk(modulus, k);
+        cycle_eigvals = D(indices);
+        D(indices) = [];
+        
+        PlotCyclicEig(D, cycle_eigvals, V, "");
     end
     
     % Combine real and imaginary parts of eigenvectors

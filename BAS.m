@@ -33,14 +33,6 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     % Compute eigenvalues and eigenvectors
     [V, Cyclic_Eigs] = eigs(P,k,'lm');
     Cyclic_Eigs = diag(Cyclic_Eigs); % Extract eigenvalues
-
-    %modulus = abs(D);
-    
-    % Select k largest eigenvalues and corresponding eigenvectors
-    % Note: We are interested in the eigenvalues with largest modulus
-    %[~, indices] = maxk(modulus, k);
-    %cycle_eigvals = D(indices);
-    %cycle_eigvecs = V(:, indices);
     
     if verbose
         fprintf('Selected %d largest eigenvalues and their eigenvectors.\n', k);
@@ -50,8 +42,17 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     % Note that if we are computing only the k largest ones,
     % the first argument should be empty []
     if plotFlag
+        D = eig(P);
+        modulus = abs(D);
+            
+        % Select k largest eigenvalues and corresponding eigenvectors
+        % Note: We are interested in the eigenvalues with largest modulus
+        [~, indices] = maxk(modulus, k);
+        cycle_eigvals = D(indices);
+        D(indices) = [];
+        
+        PlotCyclicEig(D, cycle_eigvals, V, "");
         Eigs_All = eig(P);
-        PlotCyclicEig(Eigs_All, Cyclic_Eigs, V, graph_name);
     end
     
     % Combine real and imaginary parts of eigenvectors
