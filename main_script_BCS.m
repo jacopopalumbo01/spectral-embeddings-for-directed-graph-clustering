@@ -47,7 +47,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BCS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BCS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 
 % Evaluation
@@ -73,7 +73,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BCS(W, k, plot_graph_flag, verbose, graph_name);
+[cluster_index, ~] = BCS(W, k, "transition", 1, plot_graph_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
@@ -114,7 +114,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BCS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BCS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
@@ -155,7 +155,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BCS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BCS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);

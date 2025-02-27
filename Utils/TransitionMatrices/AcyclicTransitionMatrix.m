@@ -29,9 +29,4 @@ row_sums = sum(W, 2);
 % Normalize each row to create the transition matrix
 P = W ./ row_sums;
 
-plot_transition = 0;
-if plot_transition == 1
-    figure;
-    spy(P,'k');
-end
 end

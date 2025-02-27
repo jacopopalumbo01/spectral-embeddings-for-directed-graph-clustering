@@ -61,7 +61,7 @@ for i = 1:num_tests
 
     fprintf("   Running Spectral Clustering\n");
     % Get clusters with BCS
-    [cluster_index, ~] = BAS(A, k, false, false);
+    [cluster_index, ~] = BAS(A, k, "transition", 1, false, false);
     
     % Compute and save metrics
     fprintf("       Computing and saving metrics\n");

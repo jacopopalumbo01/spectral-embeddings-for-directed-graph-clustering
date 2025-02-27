@@ -2,7 +2,7 @@ clear;clc;
 rng(47);
 
 fprintf("-------------------------------------------\n");
-fprintf("BENCHMARK FOR BCS ON STOCHASTIC BLOCKMODELS\n\n");
+fprintf("BENCHMARK FOR BCS ON STOCHASTIC BLOCKMODELS\n");
 fprintf("-------------------------------------------\n");
 
 %% Parameters
@@ -61,7 +61,7 @@ for i = 1:num_tests
 
     fprintf("   Running Spectral Clustering\n");
     % BCS clustering
-    [cluster_index_bcs, ~] = BCS(A, k, false, false);
+    [cluster_index_bcs, ~] = BCS(A, k, "transition", 1, false, false);
     
     % Compute and save metrics
     fprintf("       Computing and saving metrics\n");

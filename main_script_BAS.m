@@ -50,7 +50,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BAS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 
 % Evaluation
@@ -76,7 +76,7 @@ if plot_graph_flag == 1
     PlotCyclic(W, k, transpose(nodes), graph_name)
 end
 % Get clusters
-[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BAS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
@@ -121,7 +121,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BAS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);
@@ -166,7 +166,7 @@ if plot_graph_flag == 1
 end
 
 % Get clusters
-[cluster_index, ~] = BAS(W, k, plot_eig_flag, verbose, graph_name);
+[cluster_index, ~] = BAS(W, k, "transition", 1, plot_eig_flag, verbose, graph_name);
 
 % Evaluation
 [RCut, NCut, NMI, FScore, modularity] = ComputeMetrics(nodes,cluster_index,W);

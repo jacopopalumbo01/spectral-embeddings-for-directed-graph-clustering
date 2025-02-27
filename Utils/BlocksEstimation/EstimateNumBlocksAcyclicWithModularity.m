@@ -13,7 +13,7 @@ modularities = zeros(max_nclust,1);
 
 for k=2:max_nclust
     %% Step 1: Perform BAS for each number of clusters
-    [cluster_index, ~] = BAS(W, k, false, false);
+    [cluster_index, ~] = BAS(W, k, "transition", 1, false, false);
     
     %% Step 2: Compute modularity
     modularities(k - 1) = Modularity(W,cluster_index);

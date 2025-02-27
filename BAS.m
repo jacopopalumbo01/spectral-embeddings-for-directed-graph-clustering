@@ -1,12 +1,15 @@
-function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
+function [cluster_indeces, centroids] = BAS(W, k, transition, beta, plotFlag, verbose, graph_name)
     % BCS - Perform acyclic spectral clustering
     %
     % Syntax:
-    %        [cluster_indexs, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
+    %        [cluster_indexs, centroids] = BAS(W, k, transition, beta, plotFlag, verbose, graph_name)
     %
     % Input Arguments:
     %       - W (required):            Adjacency matrix (NxN)
     %       - k (required):            Number of clusters
+    %       - transition (required):   Type of transition matrix
+    %                                  ("transition"/"power")
+    %       - beta (required):         Parameter used when transition=power
     %       - plotFlag (optional):     Plot eigenvalues (true/false, default: false)
     %       - verbose (optional):      Verbose output (true/false, default: false)
     %       - graph_name (optional):   Name of the graph (default: '')
@@ -16,9 +19,11 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     %       - centroids:               Centroids obtained during clustering
     
     % Validate inputs
-    if nargin < 3, plotFlag = false; end
-    if nargin < 4, verbose = false; end
-    if nargin < 5, graph_name = ''; end
+    if nargin < 3, transition = "transition"; end
+    if nargin < 5, plotFlag = false; end
+    if nargin < 6, verbose = false; end
+    if nargin < 7, graph_name = ''; end
+    
     
     if ~ismatrix(W) || size(W, 1) ~= size(W, 2)
         error('Input W must be a square adjacency matrix.');
@@ -28,7 +33,12 @@ function [cluster_indeces, centroids] = BAS(W, k, plotFlag, verbose, graph_name)
     end
      
     % Compute transition probability matrix
-    P = AcyclicTransitionMatrix(W);
+    if transition == "transition"
+        P = AcyclicTransitionMatrix(W);
+    elseif transition == "power"
+        P = AdjustableAcyclicTransitionMatrix(W,beta);
+    end
+    
     
     % Compute eigenvalues and eigenvectors
     [V, Cyclic_Eigs] = eigs(P,k,'lm');
