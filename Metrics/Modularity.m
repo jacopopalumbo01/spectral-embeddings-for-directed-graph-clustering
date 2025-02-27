@@ -1,7 +1,8 @@
 function [modularity] = Modularity(W, membership)
 % Modularity - Returns the modularity associated with the provided directed
 %              graph and clusters.
-%
+% Definition of modularity as per: https://dx.doi.org/10.1088/1742-5468/2009/03/P03024
+% 
 % Input:
 %   - W:            The adjacency matrix.
 %   - membership:   The cluster membership function (vector)

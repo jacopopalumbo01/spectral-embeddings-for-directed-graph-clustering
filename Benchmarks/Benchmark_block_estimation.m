@@ -6,7 +6,7 @@ fprintf("BENCHMARK FOR ESTIMATION OF NUMBER OF BLOCKS\n");
 fprintf("--------------------------------------------\n");
 
 %% Parameters
-n         = 200;                            % Number of blocks
+n         = 200;                            % Number of points
 k         = [2; 3; 4; 5; 6; 7; 8; 9; 10;];  % Number of clusters
 conn_prob = 0.7;                            % Connection probability between blocks
 
@@ -43,7 +43,7 @@ for i = 1:num_tests
 
     % Compute estimations
     silhouette_estimates(i,2) = EstimateNumBlocksAcyclic(W, n / 10);
-    modularity_estimates(i,2) = EstimateNumBlocksAcyclicWithModularity(W, n/10);
+    [modularity_estimates(i,2), mod_vals] = EstimateNumBlocksAcyclicWithModularity(W, n/10);
     eigengaps_estimates(i,2)  = EstimateNumBlocksAcyclicWithEigengap(W, n/10);
 end
 

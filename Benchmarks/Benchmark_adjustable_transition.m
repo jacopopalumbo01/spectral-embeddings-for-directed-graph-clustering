@@ -1,4 +1,5 @@
-clear;clc;
+clear;close all;
+
 rng(47);
 
 fprintf("------------------------------------------\n");

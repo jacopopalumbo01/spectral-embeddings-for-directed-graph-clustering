@@ -1,4 +1,4 @@
-clear all; clc;
+clear all; close all;
 
 addpaths_SC;
 warning off;

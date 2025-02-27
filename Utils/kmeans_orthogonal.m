@@ -1,5 +1,6 @@
 function [Cut,cluster,cluster_centers] = kmeans_orthogonal(xx, k, num_ortho, num_random, W, normalized)
 % V(:,1:K)', K, num_ortho, num_random, label, W
+% Based on: https://www.sciencedirect.com/science/article/pii/S0047259X18300964
 
 
 p = size(xx,1);

@@ -1,4 +1,4 @@
-function [k] = EstimateNumBlocksAcyclicWithModularity(W, max_nclust)
+function [k, modularities] = EstimateNumBlocksAcyclicWithModularity(W, max_nclust)
 % EstimateNumBlocksAcyclicWithModularity - Compute number of clusters given 
 % the adjacency matrix using the modularity as metric.
 %
@@ -16,7 +16,7 @@ for k=2:max_nclust
     [cluster_index, ~] = BAS(W, k, "transition", 1, false, false);
     
     %% Step 2: Compute modularity
-    modularities(k - 1) = Modularity(W,cluster_index);
+    modularities(k - 1) = Compute_modularity(W,cluster_index);
 end
 
 %% Step 4: Select candidate k with maximum modulus modularity 
