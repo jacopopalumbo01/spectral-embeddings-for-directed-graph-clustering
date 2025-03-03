@@ -34,7 +34,7 @@ fprintf("%s\n", graph_name);
 
 % Generation of unperturbed graph
 fprintf("   Generating unperturbed graph\n")
-[W, nodes] = StochasticBlockmodel(n,k,rho_uniform,P);
+[W, nodes] = GenerateGraph(n,k,rho_uniform,P);
 
 % Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
@@ -60,7 +60,7 @@ fprintf("%s\n", graph_name);
 
 % Generation of unperturbed graph
 fprintf("   Generating unperturbed graph\n")
-[W, nodes] = StochasticBlockmodel(n,k,rho_not_uniform,P);
+[W, nodes] = GenerateGraph(n,k,rho_not_uniform,P);
 
 % Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
@@ -83,25 +83,9 @@ results(2,:) = [RCut, NCut, NMI, FScore, modularity];
 graph_name = "Perturbed Uniform Block-Cyclic graph";
 fprintf("%s\n", graph_name);
 
-% Generation of unperturbed graph
-fprintf("   Generating unperturbed graph\n")
-[W, nodes] = StochasticBlockmodel(n,k,rho_uniform,P);
-
-% Generation of perturbing graph
-% Create perturbing block connection probability matrix
-Q  = rand(k,k);
-
-% Computing new perturbing block connection probability matrix given
-% the magnitude of perturbation epsilon
-P2 = epsilon * Q;
-
-% Generate perturbing graph
-fprintf("   Generating perturbing graph\n");
-[A, ~] = StochasticBlockmodel(n,k,rho_uniform,P2);
-
-% Combine unperturbed and perturbing graph
-fprintf("   Combining unperturbed and perturbing graph\n");
-W = CombineBlockmodels(W,A);
+% Generation of perturbed graph
+fprintf("   Generating perturbed graph\n")
+[W, nodes] = GenerateGraph(n,k,rho_uniform,P,epsilon);
 
 % Estimate number of blocks
 fprintf("   Estimating number of blocks\n");
@@ -124,25 +108,9 @@ results(3,:) = [RCut, NCut, NMI, FScore, modularity];
 graph_name = "Perturbed not Uniform Block-Cycle graph";
 fprintf("%s\n", graph_name);
 
-% Generation of unperturbed graph
-fprintf("   Generating unperturbed graph\n")
-[W, nodes] = StochasticBlockmodel(n,k,rho_not_uniform,P);
-
-% Generation of perturbing graph
-% Create perturbing block connection probability matrix
-Q  = rand(k,k);
-
-% Computing new perturbing block connection probability matrix given
-% the magnitude of perturbation epsilon
-P2 = epsilon * Q;
-
-% Generate perturbing graph
-fprintf("   Generating perturbing graph\n");
-[A, ~] = StochasticBlockmodel(n,k,rho_not_uniform,P2);
-
-% Combine unperturbed and perturbing graph
-fprintf("   Combining unperturbed and perturbing graph\n");
-W = CombineBlockmodels(W,A);
+% Generation of perturbed graph
+fprintf("   Generating perturbed graph\n")
+[W, nodes] = GenerateGraph(n,k,rho_not_uniform,P, epsilon);
 
 % Estimate number of blocks
 fprintf("   Estimating number of blocks\n");

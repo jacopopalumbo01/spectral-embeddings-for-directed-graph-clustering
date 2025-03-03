@@ -1,4 +1,4 @@
-clear;clc;
+clear; close all;
 rng(47);
 
 fprintf("--------------------------------------------\n");
@@ -9,6 +9,7 @@ fprintf("--------------------------------------------\n");
 n         = 200;                            % Number of points
 k         = [2; 3; 4; 5; 6; 7; 8; 9; 10;];  % Number of clusters
 conn_prob = 0.7;                            % Connection probability between blocks
+epsilon   = 0.4;                            % Magnitude of perturbation
 
 %%
 num_tests = size(k,1);
@@ -28,7 +29,7 @@ for i = 1:num_tests
     P = ConnectionProbabilityMatrix("cyclic", k(i), conn_prob);
     
     % Generate graph
-    [W, nodes] = StochasticBlockmodel(n,k(i),rho_not_uniform,P);
+    [W, nodes] = GenerateGraph(n,k(i),rho_not_uniform,P,epsilon);
 
     % Compute estimations
     silhouette_estimates(i,1) = EstimateNumBlocksCyclic(W, n / 10);
@@ -39,7 +40,7 @@ for i = 1:num_tests
     P = ConnectionProbabilityMatrix("acyclic", k(i), conn_prob);
 
     % Generate graph
-    [W, nodes] = StochasticBlockmodel(n,k(i),rho_not_uniform,P);
+    [W, nodes] = GenerateGraph(n,k(i),rho_not_uniform,P,epsilon);
 
     % Compute estimations
     silhouette_estimates(i,2) = EstimateNumBlocksAcyclic(W, n / 10);
