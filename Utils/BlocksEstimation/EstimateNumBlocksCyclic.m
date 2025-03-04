@@ -54,7 +54,10 @@ for i_clust = 2:max_nclust
     % Cluster into i clusters using k-means (with multiple replicates for stability)
     [clusters, ~] = kmeans(submat_real_imag, i_clust, 'Distance', 'sqeuclidean', 'Replicates', 20, 'MaxIter', 10000);
 
-    % [RCut_inter,clusters]  = kmeans_orthogonal(submat_real_imag', i_clust, num_ortho, num_random,W,1);
+    % Pad the matrix
+    %mat_kmeans = [submat_real_imag, zeros(size(submat_real_imag,1),1)];
+
+    %[RCut_inter,clusters]  = kmeans_orthogonal(mat_kmeans', i_clust, num_ortho, num_random,W,1);
     
     % Preallocate arrays for silhouette components
     eta = zeros(size(submat,1),1);   % average distance to other points in same cluster

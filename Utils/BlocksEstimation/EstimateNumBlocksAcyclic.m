@@ -1,15 +1,15 @@
-function [k] = EstimateNumBlocksAcyclic(A, max_k)
+function [k] = EstimateNumBlocksAcyclic(W, max_k)
 % EstimateNumBlocksAcyclic - Compute number of clusters given the adjacency matrix.
 %
 % Input:
-%   - A:            Adjacency matrix
+%   - W:            Adjacency matrix
 %   - max_k         Maximum number of clusters to consider
 %
 % Output:
 %   - k:            Estimated number of clusters
 
 %% Step 1: Compute the transition matrix
-P = AcyclicTransitionMatrix(A);
+P = AcyclicTransitionMatrix(W);
 
 %% Step 2: Compute eigenvalues and eigenvectors
 [eigvecs, D] = eig(P); 
@@ -40,6 +40,9 @@ eigvecs = eigvecs(:, 1:k_to_find);
 % (Note: if max_k exceeds 2*k_to_find, the embedding dimension remains constant.)
 silhouette_scores = zeros(max_k - 1, 1);
 
+num_ortho  = 50;
+num_random = 100; 
+
 for i = 2:max_k
     % Use the first floor(i/2) eigenvectors if available.
     num_cols = min(floor(i/2), k_to_find);
@@ -50,6 +53,11 @@ for i = 2:max_k
     
     % Cluster into i clusters using k-means (with multiple replicates for stability)
     [clusters, ~] = kmeans(submat_real_imag, i, 'Distance', 'sqeuclidean', 'Replicates', 20, 'MaxIter', 10000);
+    
+    % Pad the matrix
+    %mat_kmeans = [submat_real_imag, zeros(size(submat_real_imag,1),1)];
+
+    %[RCut_inter,clusters]  = kmeans_orthogonal(mat_kmeans', i, num_ortho, num_random,W,1);
     
     % Preallocate arrays for silhouette components
     eta = zeros(size(submat,1),1);   % average distance to other points in same cluster

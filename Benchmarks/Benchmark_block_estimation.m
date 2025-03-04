@@ -9,7 +9,7 @@ fprintf("--------------------------------------------\n");
 n         = 200;                            % Number of points
 k         = [2; 3; 4; 5; 6; 7; 8; 9; 10;];  % Number of clusters
 conn_prob = 0.7;                            % Connection probability between blocks
-epsilon   = 0.4;                            % Magnitude of perturbation
+epsilon   = 0.3;                            % Magnitude of perturbation
 
 %%
 num_tests = size(k,1);

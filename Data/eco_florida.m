@@ -27,3 +27,8 @@ D(indices) = [];
 cycle_eigvecs = V(:, indices);
 
 PlotCyclicEig(D, cycle_eigvals, V, "");
+
+% Perform Block-Acyclic-Spectral clustering
+[inferred_labels, ~] = BAS(W,5,"transition",1,false,false);
+
+PlotCyclic(W,5,inferred_labels)
