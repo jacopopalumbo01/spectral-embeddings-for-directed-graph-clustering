@@ -36,10 +36,10 @@ epsilons  = [0.0; 0.1; 0.2; 0.3; 0.4; 0.5; 0.6; 0.7; 0.8; 0.9];
 num_tests  = size(epsilons,1);
 
 % Initialize metrics vectors
-NCut   = zeros(num_tests, 2);
-RCut   = zeros(num_tests, 2);
-NMI     = zeros(num_tests, 2);
-FScore = zeros(num_tests, 2);
+NCut   = zeros(num_tests, 4);
+RCut   = zeros(num_tests, 4);
+NMI    = zeros(num_tests, 4);
+FScore = zeros(num_tests, 4);
 
 % Create perturbing block connection probability matrix
 Q  = rand(k,k);
@@ -85,6 +85,16 @@ for i = 1:num_tests
     fprintf("       Computing and saving metrics\n");
     [RCut(i,3), NCut(i,3), NMI(i,3), FScore(i,3)] = ComputeMetrics( ...
         tau1,cluster_index_svd,A);
+
+    fprintf("   Running Spectral Clustering New\n");
+    
+    % BCS clustering new
+    [cluster_index_bcs_new, ~] = BCSnew(A, k, "transition", 1, false, false);
+    
+    % Compute and save metrics
+    fprintf("       Computing and saving metrics\n");
+    [RCut(i,4), NCut(i,4), NMI(i,4), FScore(i,4)] = ComputeMetrics( ...
+        tau1, cluster_index_bcs_new, A);
 end
 
 
@@ -107,13 +117,15 @@ figure
 
 plot(epsilons, NCut(:,1), style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
 plot(epsilons, NCut(:,2), style{2},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
+plot(epsilons, NCut(:,3), style{3},'color',C(3,:),'LineWidth',2,'MarkerSize',8);hold on; 
+plot(epsilons, NCut(:,4), style{4},'color',C(4,:),'LineWidth',2,'MarkerSize',8);hold on; 
 %loglog(Lambda,nnz_c, style{3},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
 
 ax = gca;
 ax.YAxis(1).Color = 'k';
 
 legend({...
-    'BCS', 'SVD'...
+    'BCS', 'SVD Suss', 'SVD', 'BCS new'...
      },'interpreter','latex','location','northwest');
  
  
@@ -124,28 +136,29 @@ ylabel('Normalized Cut','interpreter','latex');
 
 xlim([min(epsilons),max(epsilons)]);
 
-set(gca,'fontsize',50);
+set(gca,'fontsize',30);
 set(gca,'YMinorTick','on')
 set(gca,'XMinorTick','on','XTick',epsilons);
 
 tightfig;
 
 set(gcf,'units','points','position',[10 10 300 200]*1.9);
-saveas(gcf,'NCut_perturbation','pdf');
 
 %% F-Score
 
 figure
 
 plot(epsilons, FScore(:,1), style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
-plot(epsilons, FScore(:,2), style{2},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
+plot(epsilons, FScore(:,2), style{2},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on;
+plot(epsilons, FScore(:,3), style{3},'color',C(3,:),'LineWidth',2,'MarkerSize',8);hold on; 
+plot(epsilons, FScore(:,4), style{4},'color',C(4,:),'LineWidth',2,'MarkerSize',8);hold on; 
 %loglog(Lambda,nnz_c, style{3},'color',C(2,:),'LineWidth',2,'MarkerSize',8);hold on; 
 
 ax = gca;
 ax.YAxis(1).Color = 'k';
 
 legend({...
-    'BCS', 'SVD'...
+    'BCS', 'SVD Suss', 'SVD', 'BCS new'...
      },'interpreter','latex','location','northwest');
  
  
@@ -156,14 +169,13 @@ ylabel('F-Score','interpreter','latex');
 
 xlim([min(epsilons),max(epsilons)]);
 
-set(gca,'fontsize',50);
+set(gca,'fontsize',30);
 set(gca,'YMinorTick','on')
 set(gca,'XMinorTick','on','XTick',epsilons);
 
 tightfig;
 
 set(gcf,'units','points','position',[10 10 300 200]*1.9);
-saveas(gcf,'FScore_perturbation','pdf');
 
 
 

@@ -1,5 +1,5 @@
 function [cluster_indeces, centroids] = BAS(W, k, transition, beta, plotFlag, verbose, graph_name)
-    % BCS - Perform acyclic spectral clustering
+    % BAS - Perform acyclic spectral clustering
     %
     % Syntax:
     %        [cluster_indexs, centroids] = BAS(W, k, transition, beta, plotFlag, verbose, graph_name)
