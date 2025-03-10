@@ -9,7 +9,7 @@ fprintf("------------------------------------------\n");
 %% Parameters
 n         = 1000;         % Number of nodes
 k         = 8;            % Number of blocks  
-conn_prob = 0.7;          % Connection probability between blocks
+conn_prob = 0.8;          % Connection probability between blocks
 epsilon   = 0.4;          % Magnitude of perturbation
 
 % Block membership distribution
@@ -44,6 +44,78 @@ for i = 1:num_experiments
         modularities(i), fscores(i));
 end
 
+%% Plotting
+C=[ 0         0    1.0000
+         0    0.4980         0
+    1.0000    0.6000         0
+    0.6353    0.0784    0.1843
+     0.1490    0.8588    0.5059
+    .0000    0.000         0  
+    0.4000    0.2000    1.0000
+    1.0000    0.0000    0.0000    
+    ]; 
+
+style={'-*','-x','-+','-.o','-.s','-.d','--<','-->'};
+color={C(1,:),C(2,:),C(3,:),C(4,:)};
+
+%% Modularity
+figure
+
+plot(betas, modularities, style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
+
+ax = gca;
+ax.YAxis(1).Color = 'k';
+
+legend({...
+    'Modularity'...
+     },'interpreter','latex','location','northwest');
+ 
+ 
+xlabel('$\beta$ factor - BCS','interpreter','latex');
+
+
+ylabel('Modularity','interpreter','latex');
+
+xlim([min(betas),max(betas)]);
+
+set(gca,'fontsize',30);
+set(gca,'YMinorTick','on')
+set(gca,'XMinorTick','on','XTick',betas);
+
+tightfig;
+
+set(gcf,'units','points','position',[10 10 300 200]*1.9);
+
+%% F-Score
+
+figure
+
+plot(betas, fscores, style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
+
+ax = gca;
+ax.YAxis(1).Color = 'k';
+
+legend({...
+    'F-Score'...
+     },'interpreter','latex','location','northwest');
+ 
+ 
+xlabel('$\beta$ factor - BCS','interpreter','latex');
+
+ylabel('F-Score','interpreter','latex');
+
+
+xlim([min(betas),max(betas)]);
+
+set(gca,'fontsize',30);
+set(gca,'YMinorTick','on')
+set(gca,'XMinorTick','on','XTick',betas);
+
+tightfig;
+
+set(gcf,'units','points','position',[10 10 300 200]*1.9);
+
+
 
 fprintf("Evaluating block-acyclic graph\n");
 % Generate block connection probability
@@ -68,3 +140,60 @@ for i = 1:num_experiments
     fprintf("   beta=%f -> modularity=%f FScore=%f\n", betas(i), ...
         modularities(i), fscores(i));
 end
+
+%% Modularity
+figure
+
+plot(betas, modularities, style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
+
+ax = gca;
+ax.YAxis(1).Color = 'k';
+
+legend({...
+    'Modularity'...
+     },'interpreter','latex','location','northwest');
+ 
+ 
+xlabel('$\beta$ factor - BAS','interpreter','latex');
+
+
+ylabel('Modularity','interpreter','latex');
+
+xlim([min(betas),max(betas)]);
+
+set(gca,'fontsize',30);
+set(gca,'YMinorTick','on')
+set(gca,'XMinorTick','on','XTick',betas);
+
+tightfig;
+
+set(gcf,'units','points','position',[10 10 300 200]*1.9);
+
+%% F-Score
+
+figure
+
+plot(betas, fscores, style{1},'color',C(1,:),'LineWidth',2,'MarkerSize',8);hold on;
+
+ax = gca;
+ax.YAxis(1).Color = 'k';
+
+legend({...
+    'F-Score'...
+     },'interpreter','latex','location','northwest');
+ 
+ 
+xlabel('$\beta$ factor - BAS','interpreter','latex');
+
+ylabel('F-Score','interpreter','latex');
+
+
+xlim([min(betas),max(betas)]);
+
+set(gca,'fontsize',30);
+set(gca,'YMinorTick','on')
+set(gca,'XMinorTick','on','XTick',betas);
+
+tightfig;
+
+set(gcf,'units','points','position',[10 10 300 200]*1.9);
