@@ -38,6 +38,14 @@ function [cluster_indeces, centroids] = BAS(W, k, transition, beta, plotFlag, ve
     elseif transition == "power"
         P = AdjustableAcyclicTransitionMatrix(W,beta);
     end
+
+    % Sparsity pattern of transition matrix
+    if plotFlag
+        figure;
+        axis on;
+        spy(P, 'k.', 15);
+        axis off;
+    end
     
     
     % Compute eigenvalues and eigenvectors

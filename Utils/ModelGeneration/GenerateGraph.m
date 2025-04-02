@@ -1,4 +1,4 @@
-function [W, labels] = GenerateGraph(n,k,rho,P,epsilon)
+function [W, labels] = GenerateGraph(n,k,rho,P,sorted,epsilon)
 % GenerateGraph - Generates a Stochastic Block Model graph
 %
 % Input:
@@ -6,19 +6,22 @@ function [W, labels] = GenerateGraph(n,k,rho,P,epsilon)
 %   - k:            Number of blocks
 %   - rho:          Block membership distribution
 %   - P:            Block connection probability
+%   - sorted:       Sort the adjacency matrix based on the nodes order
 %   - epsilon:      *optional* Perturbation magnitude
 %
 % Output:
 %   - W:            Adjacency matrix (nxn)
 %   - labels:       Block membership function
 
-if nargin < 5; epsilon = 0; end
+if nargin < 5; sorted = 0; end
+if nargin < 6; epsilon = 0; end
+
 if epsilon > 1
     error("Epsilon should be less than 1. %f was provided instead", epsilon);
 end
 
 % Generate unperturbed graph
-[W, labels] = StochasticBlockmodel(n,k,rho,P);
+[W, labels] = StochasticBlockmodel(n,k,rho,P,sorted);
 
 % Add perturbation
 if epsilon ~= 0
