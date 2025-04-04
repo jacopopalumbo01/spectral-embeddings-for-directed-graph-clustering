@@ -11,10 +11,10 @@ fprintf('========================================================\n\n');
 num_trials = 5;
 
 best_value_evaluation = {
-    'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.400000-pert';
-    'BlockAcyclicPerturbation/5-blocks_2500-nodes_0.400000-pert';
-    'BlockAcyclicPerturbation/8-blocks_2500-nodes_0.400000-pert';
-    'BlockAcyclicPerturbation/10-blocks_2500-nodes_0.400000-pert';
+    'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.600000-pert';
+    'BlockAcyclicPerturbation/5-blocks_2500-nodes_0.600000-pert';
+    'BlockAcyclicPerturbation/8-blocks_2500-nodes_0.600000-pert';
+    'BlockAcyclicPerturbation/10-blocks_2500-nodes_0.600000-pert';
 };
 
 % Betas to evaluate
