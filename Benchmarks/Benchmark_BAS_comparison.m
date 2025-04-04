@@ -48,7 +48,7 @@ graph_cases = {
 };
 
 num_trials       = 5;             % How many times to run BAS on each graph
-beta             = 1.6;           % Parameter used for diffusion transition matrix
+beta             = 1.1;           % Parameter used for diffusion transition matrix
 plotFlag         = false;         % Plot eigenvalues inside BAS
 verbose          = false;         % BAS verbosity
 estimate_blocks  = false;          % Whether to estimate k or fix it manually
