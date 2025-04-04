@@ -3,10 +3,6 @@ rng(47);
 
 addpaths_SC(); % Make sure your BAS functions are in path
 
-fprintf("-------------------------------------------\n");
-fprintf("BENCHMARK FOR BAS ON STOCHASTIC BLOCKMODELS\n\n");
-fprintf("-------------------------------------------\n");
-
 %% Parameters
 graph_cases = {
     %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.000000-pert';
