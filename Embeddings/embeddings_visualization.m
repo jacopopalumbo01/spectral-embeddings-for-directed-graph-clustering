@@ -12,9 +12,9 @@ method = {
   % "SVD_unscaled",
   % "SVD_scaled",
   % "BAS",
-  % "BAS_tSNE",
+   "BAS_tSNE",
   % "BCS",
-  "BCS_tSNE"
+  % "BCS_tSNE"
 };
 
 %% Initialize results

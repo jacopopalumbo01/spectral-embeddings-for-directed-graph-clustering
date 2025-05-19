@@ -1,10 +1,30 @@
-clear; close all;warning off;
+clear; close all;warning on;
 rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
     "8blocks_500nodes.mat",
     "8blocks_500nodes_unsorted.mat",
+    "10blocks_1000nodes.mat",
+    "10blocks_100nodes.mat",
+    %"10blocks_200nodes.mat",
+    %"10blocks_500nodes.mat",
+    %"2blocks_1000nodes.mat",
+    %"2blocks_100nodes.mat",
+    %"2blocks_200nodes.mat",
+    %"2blocks_500nodes.mat",
+    %"3blocks_1000nodes.mat",
+    %"3blocks_100nodes.mat",
+    %"3blocks_200nodes.mat",
+    %"3blocks_500nodes.mat",
+    %"4blocks_1000nodes.mat",
+    %"4blocks_100nodes.mat",
+    %"4blocks_200nodes.mat",
+    %"4blocks_500nodes.mat",
+    %"5blocks_1000nodes.mat",
+    %"5blocks_100nodes.mat",
+    %"5blocks_200nodes.mat",
+    %"5blocks_500nodes.mat",
 };
 
 % Uncomment out the methods you want to use

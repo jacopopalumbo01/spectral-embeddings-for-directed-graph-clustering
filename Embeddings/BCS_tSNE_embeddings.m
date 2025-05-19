@@ -18,8 +18,13 @@ P = TransitionMatrix(W);
 
 
 % Compute eigenvalues and eigenvectors
-[V, EigVals] = eigs(P,k,'lm', "maxit", 10000);
+[V, EigVals] = eig(P);
 EigVals = diag(EigVals); % Extract eigenvalues
+
+% Sort by largest magnitude                           
+[~, idx] = sort(abs(EigVals), 'descend');     
+EigVals = EigVals(idx);               
+V = V(:, idx); 
 
 % Filter out eigenvalues
 valid_indices = (real(EigVals) <= 1) & (imag(EigVals) >= 0);
