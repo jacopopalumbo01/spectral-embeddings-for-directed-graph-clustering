@@ -3,8 +3,9 @@ rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
-    "8blocks_500nodes.mat",
-    "8blocks_500nodes_unsorted.mat",
+    "DSBM_5blocks_500nodes.mat"
+    %"8blocks_500nodes.mat",
+    %"8blocks_500nodes_unsorted.mat",
 };
 
 % Uncomment out ONLY ONE method you want to use

@@ -3,10 +3,11 @@ rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
-    "8blocks_500nodes.mat",
-    "8blocks_500nodes_unsorted.mat",
-    "10blocks_1000nodes.mat",
-    "10blocks_100nodes.mat",
+    "DSBM_5blocks_5000nodes.mat",
+    %"8blocks_500nodes.mat",
+    %"8blocks_500nodes_unsorted.mat",
+    %"10blocks_1000nodes.mat",
+    %"10blocks_100nodes.mat",
     %"10blocks_200nodes.mat",
     %"10blocks_500nodes.mat",
     %"2blocks_1000nodes.mat",
@@ -31,6 +32,7 @@ graph_cases = {
 methods = {
     "SVD_unscaled",
     "SVD_scaled",
+    "SKEW",
     "BAS",
     "BAS_tSNE",
     "BCS",
@@ -64,6 +66,8 @@ fprintf("-------------------------------\n");
                 [embeddings, clusters] = SVD_unscaled_embeddings(W,k);
             case "SVD_scaled"
                 [embeddings, clusters] = SVD_scaled_embeddings(W,k);
+            case "SKEW"
+                [embeddings, clusters] = SkewSymmetricClustering_embeddings(W,k);
             case "BAS"
                 [embeddings, clusters] = BAS_embeddings(W,k);
             case "BAS_tSNE"
