@@ -31,7 +31,9 @@ graph_cases = {
 % Uncomment out the methods you want to use
 methods = {
     "SVD_unscaled",
+    "SVD_unscaled_tSNE",
     "SVD_scaled",
+    "SVD_scaled_tSNE",
     "SKEW",
     "BAS",
     "BAS_tSNE",
@@ -64,8 +66,12 @@ fprintf("-------------------------------\n");
         switch methods{m}
             case "SVD_unscaled"
                 [embeddings, clusters] = SVD_unscaled_embeddings(W,k);
+            case "SVD_unscaled_tSNE"
+                [embeddings, clusters] = SVD_unscaled_tSNE_embeddings(W,k);
             case "SVD_scaled"
                 [embeddings, clusters] = SVD_scaled_embeddings(W,k);
+            case "SVD_scaled_tSNE"
+                [embeddings, clusters] = SVD_scaled_tSNE_embeddings(W,k);
             case "SKEW"
                 [embeddings, clusters] = SkewSymmetricClustering_embeddings(W,k);
             case "BAS"
