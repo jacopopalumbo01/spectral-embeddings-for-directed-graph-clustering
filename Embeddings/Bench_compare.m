@@ -3,7 +3,14 @@ rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
-    "DSBM_5blocks_5000nodes.mat",
+    %"DSBM_5blocks_5000nodes.mat",
+    %"DSBM_2blocks_400nodes.mat",
+    %"DSBM_3blocks_300nodes.mat",
+    %"DSBM_5blocks_500nodes.mat",
+    %"DSBM_20blocks_2000nodes.mat"
+    %"emaileu.mat",
+    "emaileu12.mat",
+    "emaileu23.mat",
     %"8blocks_500nodes.mat",
     %"8blocks_500nodes_unsorted.mat",
     %"10blocks_1000nodes.mat",
@@ -35,6 +42,7 @@ methods = {
     "SVD_scaled",
     "SVD_scaled_tSNE",
     "SKEW",
+    "Herm",
     "BAS",
     "BAS_tSNE",
     "BCS",
@@ -74,6 +82,8 @@ fprintf("-------------------------------\n");
                 [embeddings, clusters] = SVD_scaled_tSNE_embeddings(W,k);
             case "SKEW"
                 [embeddings, clusters] = SkewSymmetricClustering_embeddings(W,k);
+            case "Herm"
+                [embeddings, clusters] = HermitianClustering_embeddings(W,k);
             case "BAS"
                 [embeddings, clusters] = BAS_embeddings(W,k);
             case "BAS_tSNE"
@@ -95,7 +105,8 @@ fprintf("-------------------------------\n");
         PaS = PrecedenceAlignmentScore(W, clusters);
         [CI_vals, CIsz_vals, CIvol_vals, TopCIvol, TopCIsz, TopTF] = ComputeCI(W, clusters, c_thres);
         [NMI, Fscore] = Compute_ext_metrics(labels, clusters); 
-
+        ARI = clustereval(clusters, labels, "ari");
+        
         % Save metrics
         method = methods{m};
 
@@ -106,19 +117,20 @@ fprintf("-------------------------------\n");
         results(i).(method).Conductance = Phi;
         results(i).(method).NMI      = NMI;
         results(i).(method).Fscore   = Fscore;
+        results(i).(method).ARI      = ARI;
         results(i).(method).time     = time;
     end
 end
 
 %% Print results table
-fprintf('%-30s | %-10s | %-9s | %-7s | %-12s | %-8s | %-9s | %-5s | %-7s\n', ...
-    'Graph', 'TopCIvol', 'TopCIsz', 'TopTF', 'Conductance', 'NMI', 'F-score', 'PaS', 'Time');
+fprintf('%-30s | %-10s | %-9s | %-7s | %-12s | %-8s | %-9s | %-6s | %-6s | %-7s\n', ...
+    'Graph', 'TopCIvol', 'TopCIsz', 'TopTF', 'Conductance', 'NMI', 'F-score', 'PaS', 'ARI', 'Time');
 fprintf(repmat('-', 1, 120)); fprintf('\n');
 for m = 1:nm
     method = methods{m};
     fprintf('++++++++ %s ++++++++ \n', upper(method));
     for c = 1:nc
-        fprintf('%-30s | %10.2f | %9.4f | %7.2f | %12.1f | %8.4f | %9.4f | %5.4f | %7.2f\n', ...
+        fprintf('%-30s | %10.2f | %9.4f | %7.2f | %12.1f | %8.4f | %9.4f | %5.4f | %5.4f | %7.2f\n', ...
             graph_cases{c}, ...
             mean(results(c).(method).TopCIvol), ...
             mean(results(c).(method).TopCIsz), ...
@@ -127,6 +139,7 @@ for m = 1:nm
             mean(results(c).(method).NMI), ...
             mean(results(c).(method).Fscore), ...
             mean(results(c).(method).PaS), ...
+            mean(results(c).(method).ARI), ...
             mean(results(c).(method).time));
     end
 end

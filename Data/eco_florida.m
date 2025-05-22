@@ -6,29 +6,44 @@ fprintf("EcoFlorida Dataset\n");
 fprintf("------------------\n");
 
 % Import the dataset
-path = sprintf("%s/data/eco-florida/eco-florida.edges", pwd);
-W = ImportEdges(path);
+path_edges    = sprintf("%s/data/eco-florida/florida-bay.txt", pwd);
+path_clusters = sprintf("%s/data/eco-florida/Florida-bay-clusters.csv", pwd);
+% Open the matrix
+edges = readmatrix(path_edges, "FileType", "text");
 
-% Get the transition matrix
-P = AcyclicTransitionMatrix(W);
+% Get the number of edges
+num_edges = size(edges,1);
+% Get the number of nodes
+num_nodes = max([edges(:,1); edges(:,2)]) + 1;
 
-% Plot the eigenvalues
-[V, Cyclic_Eigs] = eigs(P,5,'lm');
-Cyclic_Eigs = diag(Cyclic_Eigs);
+% Create adjacency matrix
+W = zeros(num_nodes);
 
-D = eig(P);
-modulus = abs(D);
-    
-% Select k largest eigenvalues and corresponding eigenvectors
-% Note: We are interested in the eigenvalues with largest modulus
-[~, indices] = maxk(modulus, 5);
-cycle_eigvals = D(indices);
-D(indices) = [];
-cycle_eigvecs = V(:, indices);
+% Populate the adjacency matrix
+for i = 1:num_edges
+    W(edges(i,1) + 1, edges(i,2) + 1) = 1;
+end
 
-PlotCyclicEig(D, cycle_eigvals, V, "");
+T = readtable(path_clusters,'PreserveVariableNames',true);
 
-% Perform Block-Acyclic-Spectral clustering
-[inferred_labels, ~] = BAS(W,5,"transition",1,false,false);
+% Extract labels
+labels = -1 * ones(num_nodes,1);
+for row = 1:size(T,1)
+    if ~isnan(T(row,:).cluster)
+        labels(row) = T(row,:).cluster;
+    end
+end   
 
-PlotCyclic(W,5,inferred_labels)
+% Clean unassigned nodes
+unassigned = labels == -1;
+W(unassigned, :) = [];
+W(:,unassigned)  = [];
+labels(unassigned) = [];
+
+% Compute final values
+num_nodes = size(W,1);
+num_edges = sum(W,"all");
+
+fprintf("Num nodes: %d, Num edges: %d\n", num_nodes, num_edges);
+
+save(sprintf("%s/data/eco-florida/eco.mat", pwd), "W", "labels");
