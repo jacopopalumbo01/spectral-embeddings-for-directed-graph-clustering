@@ -17,8 +17,17 @@ P = AcyclicTransitionMatrix(W);
 
 
 % Compute eigenvalues and eigenvectors
-[V, EigVals] = eigs(P,k,'lm', "maxit", 10000);
+if ~issparse(W)
+    [V, EigVals] = eig(P);
+else 
+    [V, EigVals] = eigs(P,2*k);
+end
 EigVals = diag(EigVals); % Extract eigenvalues
+
+% Sort by largest magnitude                           
+[~, idx] = sort(abs(EigVals), 'descend');     
+EigVals = EigVals(idx);               
+V = V(:, idx);  
 
 % Filter out eigenvalues
 valid_indices = (real(EigVals) <= 1) & (imag(EigVals) >= 0);

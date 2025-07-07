@@ -13,7 +13,7 @@ graph_cases = {
     %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.500000-pert';
     %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.600000-pert';
     %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.700000-pert';
-    %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.800000-pert';
+    %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.800000-pert'; 
     %'BlockAcyclicPerturbation/3-blocks_2500-nodes_0.900000-pert';
     %'BlockAcyclicPerturbation/5-blocks_2500-nodes_0.000000-pert';
     %'BlockAcyclicPerturbation/5-blocks_2500-nodes_0.100000-pert';

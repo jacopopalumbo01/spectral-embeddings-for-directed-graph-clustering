@@ -3,7 +3,9 @@ rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
-    "DSBM_5blocks_500nodes.mat"
+    "LFR_mu10.mat",
+    %"DSBM_8blocks_5000nodes_0.000000noise.mat",
+    %"DSBM_5blocks_500nodes.mat"
     %"8blocks_500nodes.mat",
     %"8blocks_500nodes_unsorted.mat",
 };
@@ -11,9 +13,9 @@ graph_cases = {
 % Uncomment out ONLY ONE method you want to use
 method = {
   % "SVD_unscaled",
-  % "SVD_scaled",
+   "SVD_scaled",
   % "BAS",
-   "BAS_tSNE",
+  % "BAS_tSNE",
   % "BCS",
   % "BCS_tSNE"
 };

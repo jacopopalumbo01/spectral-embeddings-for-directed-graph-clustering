@@ -39,7 +39,7 @@ elseif transition == "power"
 end
 
 % Compute eigenvalues and eigenvectors
-[V, EigVals] = eigs(P, k, 'lm');
+[V, EigVals] = eigs(P, k, 'lm',"maxit",10000);
 EigVals      = diag(EigVals); % Extract eigenvalues
 
 % Filter out eigenvalues

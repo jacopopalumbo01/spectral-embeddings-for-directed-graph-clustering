@@ -3,14 +3,45 @@ rng(1991);
 
 % Uncomment out the graphs cases you want to analyze
 graph_cases = {
-    %"DSBM_5blocks_5000nodes.mat",
-    %"DSBM_2blocks_400nodes.mat",
-    %"DSBM_3blocks_300nodes.mat",
-    %"DSBM_5blocks_500nodes.mat",
-    %"DSBM_20blocks_2000nodes.mat"
+    %'2blocks_1000nodes.mat',
+    %'3blocks_1000nodes.mat',
+    %'4blocks_1000nodes.mat',
+    %'5blocks_1000nodes.mat',
+    %'6blocks_1000nodes.mat',
+    %'7blocks_1000nodes.mat',
+    %'8blocks_1000nodes.mat',
+    %'9blocks_1000nodes.mat',
+    %'10blocks_1000nodes.mat',
+    "DSBM_2blocks_5000nodes_0.000000noise.mat",
+    "DSBM_3blocks_5000nodes_0.000000noise.mat",
+    "DSBM_4blocks_5000nodes_0.000000noise.mat",
+    "DSBM_5blocks_5000nodes_0.000000noise.mat",
+    "DSBM_6blocks_5000nodes_0.000000noise.mat",
+    "DSBM_7blocks_5000nodes_0.000000noise.mat",
+    "DSBM_8blocks_5000nodes_0.000000noise.mat",
+    "DSBM_9blocks_5000nodes_0.000000noise.mat",
+    "DSBM_10blocks_5000nodes_0.000000noise.mat",
+    %"LFR_mu10.mat",
+    %"LFR_mu12.mat",
+    %"LFR_mu14.mat",
+    %"LFR_mu16.mat",
+    %"LFR_mu18.mat",
+    %"LFR_mu20.mat",
+    %"LFR_mu22.mat",
+    %"LFR_mu24.mat",
+    %"LFR_mu26.mat",
+    %"LFR_mu28.mat",
+    %"LFR_mu30.mat",
+    %"LFR_mu32.mat",
+    %"LFR_mu34.mat",
+    %"LFR_mu36.mat",
+    %"LFR_mu38.mat",
+    %"LFR_mu40.mat",
     %"emaileu.mat",
-    "emaileu12.mat",
-    "emaileu23.mat",
+    %"emaileu12.mat",
+    %"emaileu23.mat",
+    %"bank.mat",
+    %"amlsim_mixed.mat",
     %"8blocks_500nodes.mat",
     %"8blocks_500nodes_unsorted.mat",
     %"10blocks_1000nodes.mat",
@@ -37,16 +68,18 @@ graph_cases = {
 
 % Uncomment out the methods you want to use
 methods = {
-    "SVD_unscaled",
-    "SVD_unscaled_tSNE",
-    "SVD_scaled",
-    "SVD_scaled_tSNE",
+    %"SVD_unscaled",
+    %"SVD_unscaled_tSNE",
+    %"SVD_scaled",
+    %"SVD_scaled_tSNE",
     "SKEW",
+    "SKEW_tSNE",
     "Herm",
-    "BAS",
-    "BAS_tSNE",
-    "BCS",
-    "BCS_tSNE"
+    "Herm_tSNE",
+    %"BAS",
+    %"BAS_tSNE",
+    %"BCS",
+    %"BCS_tSNE"
 };
 
 %% Initialize results
@@ -82,8 +115,12 @@ fprintf("-------------------------------\n");
                 [embeddings, clusters] = SVD_scaled_tSNE_embeddings(W,k);
             case "SKEW"
                 [embeddings, clusters] = SkewSymmetricClustering_embeddings(W,k);
+            case "SKEW_tSNE"
+                [embeddings, clusters] = SkewSymmetricClustering_tSNE_embeddings(W,k);
             case "Herm"
                 [embeddings, clusters] = HermitianClustering_embeddings(W,k);
+            case "Herm_tSNE"
+                [embeddings, clusters] = HermitianClustering_tSNE_embeddings(W,k);
             case "BAS"
                 [embeddings, clusters] = BAS_embeddings(W,k);
             case "BAS_tSNE"

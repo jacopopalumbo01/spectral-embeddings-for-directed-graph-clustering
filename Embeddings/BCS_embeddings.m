@@ -18,7 +18,11 @@ P = TransitionMatrix(W);
 
 
 % Compute eigenvalues and eigenvectors
-[V, EigVals] = eig(P);
+if ~issparse(W)
+    [V, EigVals] = eig(P);
+else 
+    [V, EigVals] = eigs(P,2*k);
+end
 EigVals = diag(EigVals); % Extract eigenvalues
 
 % Sort by largest magnitude                           
