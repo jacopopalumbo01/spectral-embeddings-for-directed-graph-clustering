@@ -6,3 +6,4 @@ addpath(strcat(currentFolder,'/methods'));
 addpath(strcat(currentFolder,'/metrics'));
 addpath(strcat(currentFolder,'/experiments'));
 addpath(strcat(currentFolder,'/experiments/results'));
+addpath(strcat(currentFolder,'/experiments/visualization'));
