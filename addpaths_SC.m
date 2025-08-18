@@ -2,6 +2,8 @@ currentFolder = pwd;
 
 addpath(strcat(currentFolder,'/synthetic'));
 addpath(strcat(currentFolder,'/synthetic/generated'));
+addpath(strcat(currentFolder,'/synthetic/LFR'));
+addpath(strcat(currentFolder,'/synthetic/LFR/generated'));
 addpath(strcat(currentFolder,'/methods'));
 addpath(strcat(currentFolder,'/metrics'));
 addpath(strcat(currentFolder,'/experiments'));
