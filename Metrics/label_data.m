@@ -46,10 +46,10 @@ if method == 1
         x_inferred(index) = actual_label;
     end
     
-%         if size(unique(inferred_label),1) ~= size(inferred_label,1)
-%             fprintf('Clusters are merging into 1 label\n');
-%             fprintf('Probably unbalanced dataset\n');
-%         end
+         if size(unique(inferred_label),1) ~= size(inferred_label,1)
+             fprintf('Clusters are merging into 1 label\n');
+             fprintf('Probably unbalanced dataset\n');
+         end
     
     
 else
