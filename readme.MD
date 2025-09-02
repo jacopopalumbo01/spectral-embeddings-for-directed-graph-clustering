@@ -3,6 +3,12 @@
 > Code accompanying the master’s thesis  
 > **“Spectral embeddings for directed graph clustering” — Jacopo Palumbo (2025)**
 
+
+<p align="center">
+  <img src="experiments/figures/LFR_graph.png"  alt="Initial data" height="250"/>
+  <img src="experiments/figures/LFR_spy.png" alt="p Clusters" height="250"/>
+</p>
+
 This repository implements five adjacency-based **spectral clustering** pipelines for **directed graphs** and their **2D dimensionality-reduced** variants (via KL-divergence minimization / t-SNE) applied **before** \(k\)-means:
 
 - **ASE** — Adjacency Spectral Embedding (scaled / unscaled)  
@@ -79,7 +85,7 @@ Implemented under `metrics/`:
 
 ## Acknowledgements
 
-This work is carried out under the supervision of Prof. Olaf Schenk (Advisor) and Dr. Dimosthenis Pasadakis (Co-Advisor). Parts of the work were presented at PASC25.
+This work is carried out under the supervision of Prof. Olaf Schenk (Advisor) and Dr. Dimosthenis Pasadakis (Co-Advisor). Parts of the work were presented at [PASC25](PASC25_poster.pdf).
 
 
 ## Contact
